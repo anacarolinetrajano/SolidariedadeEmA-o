@@ -3,38 +3,131 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    {% block titulo %}
-    <title>Página Inicial</title>
-    {% endblock titulo %}
-    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+  <meta charset="UTF-8">
+  <title>Solly - Solidariedade em Ação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --cor-fundo: #fff9f8;
+      --cor-destaque: #ffcce0;
+      --cor-clara: #e6f3f4;
+      --cor-titulo: #444;
+      --cor-menu: #666;
+      --cor-botao: #f89dbb;
+    }
 
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--cor-titulo);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 40px;
+      background-color: transparent;
+    }
+
+    .logo {
+      font-size: 2.2em;
+      font-weight: bold;
+      color: #f78ca2;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: var(--cor-menu);
+      font-size: 1em;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--cor-botao);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      text-align: center;
+      background: linear-gradient(to bottom, #fde6ec, #eaf6f6);
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: var(--cor-titulo);
+    }
+
+    .hero p {
+      font-size: 1.3em;
+      max-width: 600px;
+      color: #555;
+    }
+
+    .botoes {
+      margin-top: 40px;
+    }
+
+    .botoes a {
+      display: inline-block;
+      background-color: var(--cor-botao);
+      color: white;
+      padding: 15px 30px;
+      margin: 10px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .botoes a:hover {
+      background-color: #e07da1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: #fef1f5;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
 
+  <header>
+    <div class="logo">Solly</div>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Doações</a>
+      <a href="#">Voluntariado</a>
+      <a href="#">Histórias</a>
+      <a href="#">Contato</a>
+      <a href="file:///C:/Users/Aluno/Desktop/SolidariedadeEmA-o/paginasweb/templates/paginasweb/sobre.html">Sobre</a>
+    </nav>
+  </header>
 
-<h4>Menu Superior</h4>
-<ul>
-    <li>
-        <a href="{% url "index" %}">Inicio</a>
-    </li>
-    <li>
-        <a href="{% url "sobre" %}">Sobre nós </a>
-    </li>
-</ul>
-    
-{%  block conteudo     %}
-<h3>Página inicial</h3>
+  <section class="hero">
+    <h1>Solidariedade Transforma Vidas</h1>
+    <p>Conectamos pessoas que querem ajudar com aquelas que mais precisam. Participe da corrente do bem com a Solly!</p>
+    <div class="botoes">
+      <a href="#">Cadastrar Doador</a>
+      <a href="#">Cadastrar Instituição</a>
+    </div>
+  </section>
 
-    
-<p>Bem vindos a página inicial de Programação Web</p>
+  <footer>
+    &copy; 2025 Solly. Todos os direitos reservados.
+  </footer>
 
-{%  endblock   %}
-
-<p>
-    Desenvolvido por Rafael Zottesco
-</p>
 </body>
 </html>
