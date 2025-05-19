@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'paginasweb/index.html' %}
 
-{% block content %}
+{% block conteudo %}
   <h2>{% if object %}Editar{% else %}Novo{% endif %} {{ view.model.__name__ }}</h2>
   <form method="post">
     {% csrf_token %}

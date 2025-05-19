@@ -112,7 +112,7 @@
       <a href="#">Voluntariado</a>
       <a href="#">Histórias</a>
       <a href="#">Contato</a>
-      <a href="file:///C:/Users/Aluno/Desktop/SolidariedadeEmA-o/paginasweb/templates/paginasweb/sobre.html">Sobre</a>
+      <a href="paginasweb/sobre.html">Sobre</a>
     </nav>
   </header>
 
@@ -120,9 +120,18 @@
     <h1>Solidariedade Transforma Vidas</h1>
     <p>Conectamos pessoas que querem ajudar com aquelas que mais precisam. Participe da corrente do bem com a Solly!</p>
     <div class="botoes">
-      <a href="#">Cadastrar Doador</a>
-      <a href="#">Cadastrar Instituição</a>
+      <a href="{% url "cadastrar-doador" %}">Cadastrar Doador</a>
+      <a href="{% url "cadastrar-Instituicao" %}">Cadastrar Instituição</a>
     </div>
+  </section>
+
+  <section class="conteudo">
+    {% block conteudo %}
+    <h3>Título do conteúdo</h3>
+    <div>
+      Conteúdo, formulários, etc
+    </div>
+    {% endblock conteudo %}
   </section>
 
   <footer>
