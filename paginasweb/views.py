@@ -7,7 +7,7 @@ from .models import Doador, Instituicao, Status, Doacao, Historia_Inspiradoras
 class PaginaInicial(TemplateView):
     template_name = 'paginasweb/index.html'
 
-class Instituicao(TemplateView):
+class Sobre(TemplateView):
     template_name = 'paginasweb/sobre.html'
 
 class DoadorCreate(CreateView):
@@ -15,30 +15,35 @@ class DoadorCreate(CreateView):
     model = Doador
     fields = ['nome', 'telefone', 'cidade']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar doador"}
 
 class InstituicaoCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Instituicao
     fields = ['nome', 'telefone', 'cidade', 'tipo', 'descricao']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Instituicao"}
 
 class StatusCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Status
     fields = ['nome','pode_editar']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Status"}
 
 class DoacaoCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Doacao
     fields = ['tipo', 'quantidade', 'data', 'doador', 'instituicao', 'status']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Doacao"}
 
 class Historia_InspiradorasCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Historia_Inspiradoras
-    fields = ['titulo', 'conteudo', 'data_postagem', 'autor', 'doador', 'instituicao']
+    fields = ['titulo', 'conteudo', 'autor', 'doador', 'instituicao']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Historia Inspiradoras"}
 
 
 #############################################################################################################
@@ -48,30 +53,35 @@ class DoadorUpdate(UpdateView):
     model = Doador
     fields = ['nome', 'telefone', 'cidade']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Doador"}
 
 class InstituicaoUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Instituicao
     fields = ['nome', 'telefone', 'cidade', 'tipo', 'descricao']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Instituicao"}
 
 class StatusUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Status
     fields = ['nome','pode_editar']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Status"}
 
 class DoacaoUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Doacao
     fields = ['tipo', 'quantidade', 'data', 'doador', 'instituicao', 'status']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Doacao"}
 
 class Historia_InspiradorasUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Historia_Inspiradoras
-    fields = ['titulo', 'conteudo', 'data_postagem', 'autor', 'doador', 'instituicao']
+    fields = ['titulo', 'conteudo', 'autor', 'doador', 'instituicao']
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Cadastrar Historia_Inspiradoras"}
 
 
 ################################################################################################################

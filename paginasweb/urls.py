@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    PaginaInicial, Instituicao,
+    PaginaInicial, Sobre,
     DoadorCreate, DoadorUpdate, DoadorDelete,
     InstituicaoCreate, InstituicaoUpdate, InstituicaoDelete,
     DoacaoCreate, DoacaoUpdate, DoacaoDelete,
@@ -10,7 +10,7 @@ from .views import (
 
 urlpatterns = [
     path("", PaginaInicial.as_view(), name="index"),
-    path("", Instituicao.as_view(), name="cadastrar-Instituição"),
+    path("sobre/", Sobre.as_view(), name="sobre"),
     
     path("cadastrar/doador/", DoadorCreate.as_view(), name="cadastrar-doador"),
     path("cadastrar/Instituicao/", InstituicaoCreate.as_view(), name="cadastrar-Instituicao"),
@@ -25,9 +25,9 @@ urlpatterns = [
     path("editar/Historia_Inspiradoras/<int:pk>/",Historia_InspiradorasUpdate.as_view(),name="editar-Historia_Inspiradoras"),
 
     path("deletar/doador/<int:pk>/",DoadorDelete.as_view(),name="deletar-doador"),
-    path("deletar/Instituicao/", InstituicaoDelete.as_view(), name="deletar-Instituicao"),
-    path("deletar/Doacao/", DoacaoDelete.as_view(), name="deletar-Doacao"),
-    path("deletar/Status/", StatusDelete.as_view(), name="deletar-Status"),
-    path("deletar/Historia_Inspiradoras/", Historia_InspiradorasDelete.as_view(), name="deletar-Historia_Inspiradoras"),
+    path("deletar/Instituicao/<int:pk>/", InstituicaoDelete.as_view(), name="deletar-Instituicao"),
+    path("deletar/Doacao/<int:pk>/", DoacaoDelete.as_view(), name="deletar-Doacao"),
+    path("deletar/Status/<int:pk>/", StatusDelete.as_view(), name="deletar-Status"),
+    path("deletar/Historia_Inspiradoras/<int:pk>/", Historia_InspiradorasDelete.as_view(), name="deletar-Historia_Inspiradoras"),
 
 ]
