@@ -5,6 +5,17 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Salvar</button>
+
+    {% if botao == "Excluir" %}
+    <h4>
+      Deseja excluir o registro:
+      <span style="color: red;">
+        {{object}}
+      </span>
+
+      </h4>
+    {% endif %}
+
+    <button type="submit">{{botao}}</button>
   </form>
 {% endblock %}

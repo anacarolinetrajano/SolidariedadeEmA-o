@@ -15,35 +15,35 @@ class DoadorCreate(CreateView):
     model = Doador
     fields = ['nome', 'telefone', 'cidade']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar doador"}
+    extra_context = {'titulo' : "Cadastrar doador", "botao" : "Cadastrar"}
 
 class InstituicaoCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Instituicao
     fields = ['nome', 'telefone', 'cidade', 'tipo', 'descricao']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Instituicao"}
+    extra_context = {'titulo' : "Cadastrar Instituicao", "botao" : "Cadastrar"}
 
 class StatusCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Status
     fields = ['nome','pode_editar']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Status"}
+    extra_context = {'titulo' : "Cadastrar Status", "botao" : "Cadastrar"}
 
 class DoacaoCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Doacao
     fields = ['tipo', 'quantidade', 'data', 'doador', 'instituicao', 'status']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Doacao"}
+    extra_context = {'titulo' : "Cadastrar Doacao", "botao" : "Cadastrar"}
 
 class Historia_InspiradorasCreate(CreateView):
     template_name = 'paginasweb/form.html'
     model = Historia_Inspiradoras
     fields = ['titulo', 'conteudo', 'autor', 'doador', 'instituicao']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Historia Inspiradoras"}
+    extra_context = {'titulo' : "Cadastrar Historia Inspiradoras", "botao" : "Cadastrar"}
 
 
 #############################################################################################################
@@ -53,35 +53,35 @@ class DoadorUpdate(UpdateView):
     model = Doador
     fields = ['nome', 'telefone', 'cidade']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Doador"}
+    extra_context = {'titulo' : "Cadastrar Doador", "botao" : "Editar"}
 
 class InstituicaoUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Instituicao
     fields = ['nome', 'telefone', 'cidade', 'tipo', 'descricao']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Instituicao"}
+    extra_context = {'titulo' : "Cadastrar Instituicao", "botao" : "Editar"}
 
 class StatusUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Status
     fields = ['nome','pode_editar']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Status"}
+    extra_context = {'titulo' : "Cadastrar Status", "botao" : "Editar"}
 
 class DoacaoUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Doacao
     fields = ['tipo', 'quantidade', 'data', 'doador', 'instituicao', 'status']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Doacao"}
+    extra_context = {'titulo' : "Cadastrar Doacao", "botao" : "Editar"}
 
 class Historia_InspiradorasUpdate(UpdateView):
     template_name = 'paginasweb/form.html'
     model = Historia_Inspiradoras
     fields = ['titulo', 'conteudo', 'autor', 'doador', 'instituicao']
     success_url = reverse_lazy('index')
-    extra_context = {'titulo' : "Cadastrar Historia_Inspiradoras"}
+    extra_context = {'titulo' : "Cadastrar Historia_Inspiradoras", "botao" : "Editar"}
 
 
 ################################################################################################################
@@ -90,24 +90,29 @@ class DoadorDelete(DeleteView):
     template_name = 'paginasweb/form.html'
     model = Doador
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Excluir Instituicao", "botao" : "Excluir"}
 
 class InstituicaoDelete(DeleteView):
     template_name = 'paginasweb/form.html'
     model = Instituicao
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Excluir Instituicao", "botao" : "Excluir"}
 
 
 class DoacaoDelete(DeleteView):
     template_name = 'paginasweb/form.html'
     model = Doacao
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Excluir Instituicao", "botao" : "Excluir"}
 
 class Historia_InspiradorasDelete(DeleteView):
     template_name = 'paginasweb/form.html'
     model = Historia_Inspiradoras
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Excluir Instituicao", "botao" : "Excluir"}
 
 class StatusDelete(DeleteView):
     template_name = 'paginasweb/form.html'
     model = Status
     success_url = reverse_lazy('index')
+    extra_context = {'titulo' : "Excluir Instituicao", "botao" : "Excluir"}
