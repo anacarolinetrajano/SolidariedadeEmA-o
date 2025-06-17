@@ -5,7 +5,8 @@ from .views import (
     InstituicaoCreate, InstituicaoUpdate, InstituicaoDelete,
     DoacaoCreate, DoacaoUpdate, DoacaoDelete,
     StatusCreate, StatusUpdate, StatusDelete,
-    Historia_InspiradorasCreate, Historia_InspiradorasUpdate, Historia_InspiradorasDelete,
+    Historia_InspiradorasCreate, Historia_InspiradorasUpdate, Historia_InspiradorasDelete, 
+    DoadorList, InstituicaoList, DoacaoList, Historia_InspiradorasList, StatusList
 )
 
 urlpatterns = [
@@ -29,5 +30,12 @@ urlpatterns = [
     path("deletar/Doacao/<int:pk>/", DoacaoDelete.as_view(), name="deletar-Doacao"),
     path("deletar/Status/<int:pk>/", StatusDelete.as_view(), name="deletar-Status"),
     path("deletar/Historia_Inspiradoras/<int:pk>/", Historia_InspiradorasDelete.as_view(), name="deletar-Historia_Inspiradoras"),
+
+    path("listar/doador/", DoadorList.as_view(), name="listar-doador"),
+    path("listar/Instituicao/", InstituicaoList.as_view(), name="listar-Instituicao"),
+    path("listar/Doacao/", DoacaoList.as_view(), name="listar-Doacao"),
+    path("listar/Status/", StatusList.as_view(), name="listar-Status"),
+    path("listar/Historia_Inspiradoras/", Historia_InspiradorasList.as_view(), name="listar-Historia_Inspiradoras"),
+
 
 ]

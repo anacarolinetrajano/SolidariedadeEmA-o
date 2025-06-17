@@ -1,5 +1,5 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.urls import reverse_lazy
 from .models import Doador, Instituicao, Status, Doacao, Historia_Inspiradoras
 
@@ -116,3 +116,29 @@ class StatusDelete(DeleteView):
     model = Status
     success_url = reverse_lazy('index')
     extra_context = {'titulo' : "Excluir Instituicao", "botao" : "Excluir"}
+
+    ######################################################################################################
+
+class DoadorList(ListView):
+    template_name = 'paginasweb/lista/doadorLista.html'
+    model = Doador
+   
+
+class InstituicaoList(ListView):
+    template_name = 'paginasweb/lista/InstituicaoLista.html'
+    model = Instituicao
+   
+
+class DoacaoList(ListView):
+    template_name = 'paginasweb/lista/DoacaoLista.html'
+    model = Doacao
+
+
+class Historia_InspiradorasList(ListView):
+    template_name = 'paginasweb/lista/Historia_InspiradorasLista.html'
+    model = Historia_Inspiradoras
+
+
+class StatusList(ListView):
+    template_name = 'paginasweb/lista/StatusLista.html'
+    model = Status
