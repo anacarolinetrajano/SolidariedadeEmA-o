@@ -9,7 +9,25 @@ from .views import (
     DoadorList, InstituicaoList, DoacaoList, Historia_InspiradorasList, StatusList
 )
 
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
+    #Criar rota para página de login
+    path("login/", auth_views.LoginView.as_view(
+         template_name = 'paginasweb/form.html', 
+          extra_context = {'titulo' : "Autentificação ", "botao" : "Entrar"}
+    ), name= "login"),
+
+     path("senha/", auth_views.PasswordChangeView.as_view(
+         template_name = 'paginasweb/form.html', 
+          extra_context = {'titulo' : "Atualizar ", "botao" : "Salvar"}
+    ), name= "senha"),
+
+
+    #Criar uma rota de logout
+    path("sair/", auth_views.LogoutView.as_view(), name= "sair"), 
+
+
     path("", PaginaInicial.as_view(), name="index"),
     path("sobre/", Sobre.as_view(), name="sobre"),
     

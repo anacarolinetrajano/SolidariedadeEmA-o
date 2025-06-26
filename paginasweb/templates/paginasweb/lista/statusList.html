@@ -1,0 +1,31 @@
+{% extends "paginasweb/index.html" %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h3>Lista de </h3>
+
+<table>
+<tr>
+    <th>Nome</th>
+    <th>Telefone</th>
+    <th>cidade</th>
+    <th>Administrar</th>
+</tr>
+
+{% for doador in object_list %}
+<tr>
+    <td>{{doador.nome}}</td>
+    <td>{{doador.telefone}}</td>
+    <td>{{doador.cidade}}</td>
+    <td>
+        <a href="{% url "editar-doador" doador.pk %}">Editar</a> 
+        <a href="{% url "deletar-doador" doador.pk %}">Deletar</a>
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
