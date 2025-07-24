@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db import models
 
 tipos_doacao = (
     ("1", "Dinheiro"),
@@ -64,4 +66,13 @@ class Historia_Inspiradoras(models.Model):
     def __str__(self):
         return f"{self.titulo} ({self.autor})"
 
+
+class Aluno(models.Model):
+    nome = models.CharField(max_length=100)
+    matricula = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=100)
+    email = models.EmailField(max_length=200)
+    telefone = models.CharField(max_length=14)
+    cadastrado_em = models.DateTimeField(auto_now_add=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='aluno')
 
