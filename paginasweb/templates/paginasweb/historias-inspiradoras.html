@@ -1,0 +1,73 @@
+ {% load static %}
+from django.urls import path
+from . import views
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Solly - Solidariedade em Ação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Solly</div>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Doações</a>
+      <a href="#">Voluntariado</a>
+      <a href="{% url 'historias-inspiradoras' %}">Histórias</a>
+      <a href="#">Contato</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Solidariedade Transforma Vidas</h1>
+    <p>Conectamos pessoas que querem ajudar com aquelas que mais precisam. Participe da corrente do bem com a Solly!</p>
+    <div class="botoes">
+      <a href="{% url 'cadastrar-doador' %}">Cadastrar Doador</a>
+      <a href="{% url 'cadastrar-Instituicao' %}">Cadastrar Instituição</a>
+    </div>
+  </section>
+
+ <section class="testimonials">
+    <h2>Histórias e Frases Inspiradoras</h2>
+    <div class="carousel-wrapper">
+        <button class="nav-button left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="carousel">
+
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>Eu cheguei até vocês pelo aplicativo Solidarizando e tá sendo uma experiência incrível, magnífica mesmo...</p>
+                <img src="https://i.pravatar.cc/60?img=1" alt="Tamires">
+                <div class="name">Tamires</div>
+                <div class="role">Voluntária</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>Esse app me ajudou muito a participar de certas missões, que eu tinha muita vontade de fazer, mas não sabia como...</p>
+                <img src="https://i.pravatar.cc/60?img=2" alt="Carol">
+                <div class="name">Carol</div>   
+                <div class="role">Voluntária</div>
+            </div>        
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>Eu sempre quis ajudar, mas não sabia como. Com o Solidarizando, encontrei a oportunidade perfeita para fazer a diferença.</p>
+                <img src="https://i.pravatar.cc/60?img=3" alt="João">
+                <div class="name">João</div>    
+                <div class="role">Doador</div>
+            </div>
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>O Solidarizando me conectou com pessoas incríveis e projetos que realmente fazem a diferença. É gratificante ver o impacto das nossas ações.</p>
+                <img src="https://i.pravatar.cc/60?img=4" alt="Ana">
+                <div class="name">Ana</div>
+                <div class="role">Doadora</div>
+            </div>
+        </div>
+        <button class="nav-button right" onclick="scrollCarousel(1)">›</button>
+    </div>
+  </section>  

@@ -1,4 +1,6 @@
-{% load static %}
+ {% load static %}
+from django.urls import path
+from . import views
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -16,9 +18,9 @@
       <a href="#">Início</a>
       <a href="#">Doações</a>
       <a href="#">Voluntariado</a>
-      <a href="#">Histórias</a>
+      <a href="{% url 'historias-inspiradoras' %}">Histórias Inspiradoras</a>
       <a href="#">Contato</a>
-      <a href="{% url "sobre" %}">Sobre</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
     </nav>
   </header>
 
@@ -26,8 +28,8 @@
     <h1>Solidariedade Transforma Vidas</h1>
     <p>Conectamos pessoas que querem ajudar com aquelas que mais precisam. Participe da corrente do bem com a Solly!</p>
     <div class="botoes">
-      <a href="{% url "cadastrar-doador" %}">Cadastrar Doador</a>
-      <a href="{% url "cadastrar-Instituicao" %}">Cadastrar Instituição</a>
+      <a href="{% url 'cadastrar-doador' %}">Cadastrar Doador</a>
+      <a href="{% url 'cadastrar-Instituicao' %}">Cadastrar Instituição</a>
     </div>
   </section>
 
@@ -40,8 +42,107 @@
     {% endblock conteudo %}
   </section>
 
+  <section class="voluntario-doador-section">
+    <div class="conteudo-voluntario">
+      <h2 class="titulo">VOLUNTÁRIOS E DOADORES</h2>
+      <p><strong>Abrace uma nova forma de solidariedade!</strong></p>
+      <p>
+        Explore diferentes causas, filtre e <strong>selecione aquelas que mais se alinham aos seus valores</strong>, seja por meio de <strong>trabalho voluntário ou doações</strong>.
+        Com o auxílio da <strong>geolocalização</strong>, o aplicativo indica as <strong>instituições mais próximas de você</strong>, apresentando as <strong>necessidades específicas de cada uma</strong>, de acordo com o seu perfil.
+      </p>
+      <a href= class="botao-voluntario">Seja voluntário</a>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>Histórias e Frases Inspiradoras</h2>
+    <div class="carousel-wrapper">
+        <button class="nav-button left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="carousel">
+
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>Eu cheguei até vocês pelo aplicativo Solidarizando e tá sendo uma experiência incrível, magnífica mesmo...</p>
+                <img src="https://i.pravatar.cc/60?img=1" alt="Tamires">
+                <div class="name">Tamires</div>
+                <div class="role">Voluntária</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>Esse app me ajudou muito a participar de certas missões, que eu tinha muita vontade de fazer, mas não sabia como...</p>
+                <img src="https://i.pravatar.cc/60?img=2" alt="Carol">
+                <div class="name">Carol</div>   
+                <div class="role">Voluntária</div>
+            </div>        
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>Eu sempre quis ajudar, mas não sabia como. Com o Solidarizando, encontrei a oportunidade perfeita para fazer a diferença.</p>
+                <img src="https://i.pravatar.cc/60?img=3" alt="João">
+                <div class="name">João</div>    
+                <div class="role">Doador</div>
+            </div>
+            <div class="testimonial">
+                <div class="quote">“</div>
+                <p>O Solidarizando me conectou com pessoas incríveis e projetos que realmente fazem a diferença. É gratificante ver o impacto das nossas ações.</p>
+                <img src="https://i.pravatar.cc/60?img=4" alt="Ana">
+                <div class="name">Ana</div>
+                <div class="role">Doadora</div>
+            </div>
+        </div>
+        <button class="nav-button right" onclick="scrollCarousel(1)">›</button>
+    </div>
+  </section>  
+
+  <section class="faq-section">
+    <h2>FAQ - Perguntas Frequentes</h2>
+
+    <div class="faq-item">
+      <button class="faq-question">EM QUAL REGIÃO A SOLIDARIZANDO ESTÁ DISPONÍVEL PARA ADESÃO DAS INSTITUIÇÕES?</button>
+      <div class="faq-answer">
+        <p>Atualmente a plataforma está disponível em todo o território nacional, com foco em instituições cadastradas em áreas de maior vulnerabilidade.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">HÁ ALGUM CUSTO NA SOLIDARIZANDO?</button>
+      <div class="faq-answer">
+        <p>Não, tanto para os doadores quanto para as instituições, o uso da plataforma é totalmente gratuito.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">COMO FUNCIONA O PROCESSO DE ADESÃO PARA INSTITUIÇÕES NA SOLIDARIZANDO?</button>
+      <div class="faq-answer">
+        <p>A instituição preenche um formulário de cadastro com seus dados, que passam por uma validação da equipe antes da liberação.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">COMO FUNCIONA A PLATAFORMA SOCIAL SOLIDARIZANDO?</button>
+      <div class="faq-answer">
+        <p>Ela conecta doadores, voluntários e instituições, promovendo campanhas, doações diretas e oportunidades de voluntariado.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">QUAL A FINALIDADE DA PLATAFORMA SOCIAL SOLIDARIZANDO?</button>
+      <div class="faq-answer">
+        <p>Promover a solidariedade e facilitar a ajuda mútua entre pessoas e organizações que atuam com causas sociais.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">QUAIS INSTITUIÇÕES ESTÃO APTAS A SE CADASTRAREM NA PLATAFORMA SOCIAL SOLIDARIZANDO?</button>
+      <div class="faq-answer">
+        <p>ONGs, abrigos, projetos sociais, instituições ambientais, bancos de alimentos e organizações legalmente registradas.</p>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    &copy; 2025 Solly. Todos os direitos reservados.
+    <p>Entre em contato: contato@solly.org.br | © 2025 Solly. Todos os direitos reservados.</p>
+    <p>“Fazer o bem é o melhor investimento que existe.”</p>
   </footer>
 
 </body>

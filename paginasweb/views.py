@@ -17,7 +17,7 @@ class doadorList(LoginRequiredMixin, ListView):
     template_name = 'doador.html'
 
 class doacaoList(LoginRequiredMixin, ListView):
-    model = Doação
+    model = Doacao
     template_name = 'doacao.html'
 
 
