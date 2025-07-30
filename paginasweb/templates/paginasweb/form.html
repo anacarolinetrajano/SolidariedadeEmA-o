@@ -1,8 +1,13 @@
+{% extends "paginasweb/modelo.html" %}
+
 
 {% block conteudo %}
-  <h2>{{ titulo }}</h2>
+  <h2 class="centralizado">{{ titulo }}</h2>
+
   <form method="post">
+
     {% csrf_token %}
+    
     {{ form.as_p }}
 
     {% if botao == "Excluir" %}
@@ -14,15 +19,8 @@
 
       </h4>
     {% endif %}
-    
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
 
     <button type="submit">{{botao}}</button>
+
   </form>
 {% endblock %}

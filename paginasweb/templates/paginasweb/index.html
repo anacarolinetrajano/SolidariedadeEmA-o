@@ -13,15 +13,17 @@
   <header>
     <div class="logo">Solly</div>
     <nav>
-      <a href="#">Início</a>
-      <a href="#">Doações</a>
-      <a href="#">Voluntariado</a>
-      <a href="#">Histórias Inspiradoras</a>
+      <a href="{% url "index" %}">Início</a>
+      <a href="{% url "listar-doacao" %}">Doações</a>
+      <a href="{% url "listar-doador" %}">Doadores</a>
+      <a href="{% url "listar-instituicao" %}">Instituições</a>
+      <a href="{% url "listar-historia-inspiradora" %}">Histórias Inspiradoras</a>
       <a href="#">Contato</a>
       <a href="{% url 'sobre' %}">Sobre</a>
     </nav>
   </header>
 
+  {% block header %}
   <section class="hero-slider">
   <div class="slide active" style="background-image: url('{% static "img/doação.png" %}');">
     <div class="slide-content">
@@ -29,7 +31,7 @@
       <p>Doe parte do seu imposto de renda e ajude quem mais precisa!</p>
       <div class="botoes">
         <a href="{% url 'cadastrar-doador' %}">Quero Doar</a>
-        <a href="{% url 'cadastrar-Instituicao' %}">Sou Instituição</a>
+        <a href="{% url 'cadastrar-instituicao' %}">Sou Instituição</a>
       </div>
     </div>
   </div>
@@ -47,6 +49,7 @@
   <button class="prev" onclick="changeSlide(-1)">‹</button>
   <button class="next" onclick="changeSlide(1)">›</button>
 </section>
+{% endblock header %}
 
 
   <section class="conteudo">
@@ -58,6 +61,7 @@
     {% endblock conteudo %}
   </section>
 
+  {% block voluntario_doador %}
   <section class="voluntario-doador-section">
     <div class="conteudo-voluntario">
       <h2 class="titulo">VOLUNTÁRIOS E DOADORES</h2>
@@ -88,7 +92,9 @@
     </div>
   </div>
 </section>
+{% endblock voluntario_doador %}
 
+{% block depoimentos %}
   <section class="testimonials">
     <h2>Histórias e Frases Inspiradoras</h2>
     <div class="carousel-wrapper">
@@ -128,7 +134,10 @@
         <button class="nav-button right" onclick="scrollCarousel(1)">›</button>
     </div>
   </section>  
+{% endblock depoimentos %}
 
+
+{% block faq %}
   <section class="faq-section">
     <h2>FAQ - Perguntas Frequentes</h2>
 
@@ -174,11 +183,28 @@
       </div>
     </div>
   </section>
+{% endblock faq %}
+
 
   <footer>
     <p>Entre em contato: contato@solly.org.br | © 2025 Solly. Todos os direitos reservados.</p>
     <p>“Fazer o bem é o melhor investimento que existe.”</p>
   </footer>
+
+
+  <script>
+    // Exibir mensagens como alertas
+    {% if messages %}
+    var msg = [];
+      {% for message in messages %}
+        msg.push("{{ message }}");
+      {% endfor %}
+      msg.forEach(msg => {
+        alert(msg);
+      });
+    {% endif %}
+
+  </script>
 
   <script>
   let currentSlide = 0;

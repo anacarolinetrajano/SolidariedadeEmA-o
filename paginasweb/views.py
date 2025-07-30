@@ -16,6 +16,7 @@ class doadorList(LoginRequiredMixin, ListView):
     model = Doador
     template_name = 'doador.html'
 
+
 class doacaoList(LoginRequiredMixin, ListView):
     model = Doacao
     template_name = 'doacao.html'
@@ -24,8 +25,10 @@ class doacaoList(LoginRequiredMixin, ListView):
 class PaginaInicial(TemplateView):
     template_name = 'paginasweb/index.html'
 
+
 class Sobre(TemplateView):
     template_name = 'paginasweb/sobre.html'
+
 
 class DoadorCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     template_name = 'paginasweb/form.html'
@@ -35,6 +38,7 @@ class DoadorCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     extra_context = {'titulo' : "Cadastrar doador", "botao" : "Cadastrar"}
     success_message = "Doador criado com sucesso!"
 
+
 class InstituicaoCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     template_name = 'paginasweb/form.html'
     model = Instituicao
@@ -42,6 +46,8 @@ class InstituicaoCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('index')
     extra_context = {'titulo' : "Cadastrar Instituicao", "botao" : "Cadastrar"}
     success_message = "Instituição criada com sucesso!"
+
+
 class StatusCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     template_name = 'paginasweb/form.html'
     model = Status
@@ -49,6 +55,7 @@ class StatusCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('index')
     extra_context = {'titulo' : "Cadastrar Status", "botao" : "Cadastrar"}
     
+
 class DoacaoCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     template_name = 'paginasweb/form.html'
     model = Doacao
@@ -56,8 +63,11 @@ class DoacaoCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('index')
     extra_context = {'titulo' : "Cadastrar Doacao", "botao" : "Cadastrar"}
     success_message = "Doação criada!"
+
+
 class Historia_InspiradorasCreate(SuccessMessageMixin,LoginRequiredMixin, CreateView):
     model = Historia_Inspiradoras
+    template_name = 'paginasweb/form.html'
     fields = ['titulo', 'conteudo', 'autor', 'doador', 'instituicao']
     success_url = reverse_lazy('index')
     extra_context = {'titulo' : "Cadastrar Historia Inspiradoras", "botao" : "Cadastrar"}
@@ -140,7 +150,7 @@ class DoadorList(ListView):
     model = Doador
 
 class InstituicaoList(ListView):
-    template_name = 'paginasweb/lista/instituicaoLista.html'
+    template_name = 'paginasweb/lista/instituicaoList.html'
     model = Instituicao
 
 class DoacaoList(ListView):
@@ -148,7 +158,7 @@ class DoacaoList(ListView):
     model = Doacao
 
 class Historia_InspiradorasList(ListView):
-    template_name = 'paginasweb/lista/historia_inspiradorasList.html'
+    template_name = 'paginasweb/lista/historias_inspiradorasList.html'
     model = Historia_Inspiradoras
 
 class StatusList(ListView):

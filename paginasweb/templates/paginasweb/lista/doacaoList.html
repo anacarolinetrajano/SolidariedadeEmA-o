@@ -1,28 +1,36 @@
-{% extends "paginasweb/index.html" %}
+{% extends "paginasweb/modelo.html" %}
 
 {% load static %}
 
 {% block conteudo %}
 
-<h3>Lista de </h3>
+<h2>Lista de Doações</h2>
 
 <table>
 <tr>
-    <th>Nome</th>
-    <th>Telefone</th>
-    <th>cidade</th>
+    <th>Tipo</th>
+    <th>Quantidade</th>
+    <th>Data</th>
+    <th>Doador</th>
+    <th>Instituição</th>
     <th>Administrar</th>
 </tr>
 
-{% for doador in object_list %}
+{% for doacao in object_list %}
 <tr>
-    <td>{{doador.nome}}</td>
-    <td>{{doador.telefone}}</td>
-    <td>{{doador.cidade}}</td>
+    <td>{{ doacao.tipo }}</td>
+    <td>{{ doacao.quantidade }}</td>
+    <td>{{ doacao.data }}</td>
+    <td>{{ doacao.doador.nome }}</td>
+    <td>{{ doacao.instituicao.nome }}</td>
     <td>
-        <a href="{% url "editar-doador" doador.pk %}">Editar</a> 
-        <a href="{% url "deletar-doador" doador.pk %}">Deletar</a>
+        <a href="{% url "editar-doacao" doacao.pk %}">Editar</a> 
+        <a href="{% url "deletar-doacao" doacao.pk %}">Deletar</a>
     </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6">Nenhuma doação encontrada.</td>
 </tr>
 {% endfor %}
 

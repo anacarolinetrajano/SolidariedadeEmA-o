@@ -1,16 +1,17 @@
-{% extends "paginasweb/index.html" %}
+{% extends "paginasweb/modelo.html" %}
 
 {% load static %}
 
 {% block conteudo %}
 
-<h3>Lista de </h3>
+<h2>Lista de Instituições</h2>
 
 <table>
 <tr>
     <th>Nome</th>
     <th>Telefone</th>
-    <th>cidade</th>
+    <th>Cidade</th>
+    <th>Tipo</th>
     <th>Administrar</th>
 </tr>
 
@@ -19,6 +20,7 @@
     <td>{{doador.nome}}</td>
     <td>{{doador.telefone}}</td>
     <td>{{doador.cidade}}</td>
+    <td>{{doador.tipo}}</td>
     <td>
         <a href="{% url "editar-doador" doador.pk %}">Editar</a> 
         <a href="{% url "deletar-doador" doador.pk %}">Deletar</a>

@@ -1,31 +1,27 @@
-{% extends "paginasweb/index.html" %}
+{% extends "paginasweb/modelo.html" %}
 
 {% load static %}
 
 {% block conteudo %}
 
-<h3>Lista de </h3>
+<h2>Lista de Histórias Inspiradoras</h2>
 
-<table>
-<tr>
-    <th>Nome</th>
-    <th>Telefone</th>
-    <th>cidade</th>
-    <th>Administrar</th>
-</tr>
 
-{% for doador in object_list %}
-<tr>
-    <td>{{doador.nome}}</td>
-    <td>{{doador.telefone}}</td>
-    <td>{{doador.cidade}}</td>
-    <td>
-        <a href="{% url "editar-doador" doador.pk %}">Editar</a> 
-        <a href="{% url "deletar-doador" doador.pk %}">Deletar</a>
-    </td>
-</tr>
+{% for historia in object_list %}
+<!-- Exibir as histórias em forma de blog -->
+<div class="blog-post">
+    <h3>{{ historia.titulo }}</h3>
+    <p>{{ historia.conteudo }}</p>
+    <p><strong>Data de Postagem:</strong> {{ historia.data_postagem }}</p>
+    <p><strong>Autor:</strong> {{ historia.autor }}</p>
+    <p><strong>Doador:</strong> {{ historia.doador }}</p>
+    <p><strong>Instituição:</strong> {{ historia.instituicao }}</p>
+    <a href="{% url "editar-historia-inspiradora" historia.pk %}">Editar</a>
+    <a href="{% url "deletar-historia-inspiradora" historia.pk %}">Deletar</a>
+</div>
+{% empty %}
+<p>Nenhuma história inspiradora encontrada.</p>
 {% endfor %}
 
-</table>
 
 {% endblock %}
