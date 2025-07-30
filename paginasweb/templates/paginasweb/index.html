@@ -1,6 +1,4 @@
  {% load static %}
-from django.urls import path
-from . import views
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -18,20 +16,38 @@ from . import views
       <a href="#">Início</a>
       <a href="#">Doações</a>
       <a href="#">Voluntariado</a>
-      <a href="{% url 'historias-inspiradoras' %}">Histórias Inspiradoras</a>
+      <a href="#">Histórias Inspiradoras</a>
       <a href="#">Contato</a>
       <a href="{% url 'sobre' %}">Sobre</a>
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Solidariedade Transforma Vidas</h1>
-    <p>Conectamos pessoas que querem ajudar com aquelas que mais precisam. Participe da corrente do bem com a Solly!</p>
-    <div class="botoes">
-      <a href="{% url 'cadastrar-doador' %}">Cadastrar Doador</a>
-      <a href="{% url 'cadastrar-Instituicao' %}">Cadastrar Instituição</a>
+  <section class="hero-slider">
+  <div class="slide active" style="background-image: url('{% static "img/doação.png" %}');">
+    <div class="slide-content">
+      <h1>Sua doação transforma vidas</h1>
+      <p>Doe parte do seu imposto de renda e ajude quem mais precisa!</p>
+      <div class="botoes">
+        <a href="{% url 'cadastrar-doador' %}">Quero Doar</a>
+        <a href="{% url 'cadastrar-Instituicao' %}">Sou Instituição</a>
+      </div>
     </div>
-  </section>
+  </div>
+  <div class="slide" style="background-image: url('{% static "img/grupo.jpg" %}');">
+    <div class="slide-content">
+      <h1>Conectando Solidariedade</h1>
+      <p>Voluntarie-se para causas que combinam com você. Faça parte!</p>
+      <div class="botoes">
+        <a href="#">Seja Voluntário</a>
+        <a href=>Veja Histórias</a>
+      </div>
+    </div>
+  </div>
+
+  <button class="prev" onclick="changeSlide(-1)">‹</button>
+  <button class="next" onclick="changeSlide(1)">›</button>
+</section>
+
 
   <section class="conteudo">
     {% block conteudo %}
@@ -50,9 +66,28 @@ from . import views
         Explore diferentes causas, filtre e <strong>selecione aquelas que mais se alinham aos seus valores</strong>, seja por meio de <strong>trabalho voluntário ou doações</strong>.
         Com o auxílio da <strong>geolocalização</strong>, o aplicativo indica as <strong>instituições mais próximas de você</strong>, apresentando as <strong>necessidades específicas de cada uma</strong>, de acordo com o seu perfil.
       </p>
-      <a href= class="botao-voluntario">Seja voluntário</a>
+      <a href="" class="botao-voluntario">Seja voluntário</a>
     </div>
   </section>
+
+  <section class="como-doar">
+  <h2 class="titulo-como-doar">COMO DOAR</h2>
+  <p class="descricao-como-doar">Quer contribuir com o trabalho realizado na Fundação Solidariedade?</p>
+  <div class="opcoes-doacao">
+    <div class="item-doacao">
+      <img src="{% static 'img/imposto.png' %}" alt="Imposto de Renda">
+      <h3>Imposto de Renda</h3>
+    </div>
+    <div class="item-doacao">
+      <img src="{% static 'img/porquinho.png' %}" alt="Depósito Bancário">
+      <h3>Depósito Bancário</h3>
+    </div>
+    <div class="item-doacao">
+      <img src="{% static 'img/consumo.png' %}" alt="Bens de Consumo">
+      <h3>Bens de Consumo</h3>
+    </div>
+  </div>
+</section>
 
   <section class="testimonials">
     <h2>Histórias e Frases Inspiradoras</h2>
@@ -145,5 +180,24 @@ from . import views
     <p>“Fazer o bem é o melhor investimento que existe.”</p>
   </footer>
 
+  <script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll(".slide");
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+  }
+
+  function changeSlide(direction) {
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  setInterval(() => changeSlide(1), 7000); // troca automática a cada 7s
+</script>
+
 </body>
+
 </html>
