@@ -104,13 +104,12 @@ body {
 /* Cabeçalho */
 header {
   background-color: #ffdcdc;
-  padding: 30px 20px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   text-align: center;
-  padding-top: 120px;
 }
 
 .logo-container {
