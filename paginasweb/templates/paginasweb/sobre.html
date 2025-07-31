@@ -4,7 +4,28 @@
 
 <!-- Fonte bonita -->
 <link href="C:\Users\Aluno\Desktop\SolidariedadeEmA-o\img\346084ef8d32f94f07cf54d681d2f106 copy.jpg" rel="stylesheet">
-
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Solly - Solidariedade em Ação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+<header>
+    <div class="logo">Solly</div>
+    <nav>
+      <a href="{% url "index" %}">Início</a>
+      <a href="{% url "listar-doacao" %}">Doações</a>
+      <a href="{% url "listar-doador" %}">Doadores</a>
+      <a href="{% url "listar-instituicao" %}">Instituições</a>
+      <a href="{% url "listar-historia-inspiradora" %}">Histórias Inspiradoras</a>
+      <a href="#">Contato</a>
+      <a href="{% url 'sobre' %}">Sobre</a>
+    </nav>
+  </header>
+  <br>
 <style>
     body {
         font-family: 'Raleway', sans-serif;
