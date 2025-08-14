@@ -1,4 +1,4 @@
- {% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -6,95 +6,71 @@
   <meta charset="UTF-8">
   <title>Solly - Solidariedade em Ação</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Doe, voluntarie-se e ajude a transformar vidas com a plataforma Solly. Solidariedade em ação em todo o Brasil.">
+  <meta property="og:title" content="Solly - Solidariedade em Ação">
+  <meta property="og:description" content="Doe, voluntarie-se e ajude a transformar vidas com a plataforma Solly.">
+  <meta property="og:image" content="{% static 'img/doação.png' %}">
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
-    <div class="logo">Solly</div>
-    <nav>
-      <a href="{% url "index" %}">Início</a>
-      <a href="{% url "listar-doacao" %}">Doações</a>
-      <a href="{% url "listar-doador" %}">Doadores</a>
-      <a href="{% url "listar-instituicao" %}">Instituições</a>
-      <a href="{% url "listar-historia-inspiradora" %}">Histórias Inspiradoras</a>
-      <a href="#">Contato</a>
-      <a href="{% url 'sobre' %}">Sobre</a>
+    <div class="logo" aria-label="Logo Solly">Solly</div>
+    <nav id="menu">
+      <a href="{% url 'index' %}" class="nav-btn">Início</a>
+      <a href="{% url 'listar-doacao' %}" class="nav-btn">Doações</a>
+      <a href="{% url 'listar-doador' %}" class="nav-btn">Doadores</a>
+      <a href="{% url 'listar-instituicao' %}" class="nav-btn">Instituições</a>
+      <a href="{% url 'listar-historia-inspiradora' %}" class="nav-btn">Histórias</a>
+      <a href="#" class="nav-btn">Contato</a>
+      <a href="{% url 'sobre' %}" class="nav-btn">Sobre</a>
     </nav>
+    <button class="menu-toggle" aria-label="Abrir Menu" onclick="toggleMenu()">☰</button>
   </header>
 
+  <!-- HERO SLIDER -->
   {% block header %}
-  <section class="hero-slider">
-  <div class="slide active" style="background-image: url('{% static "img/doação.png" %}');">
-    <div class="slide-content">
-      <h1>Sua doação transforma vidas</h1>
-      <p>Doe parte do seu imposto de renda e ajude quem mais precisa!</p>
-      <div class="botoes">
-        <a href="{% url 'cadastrar-doador' %}">Quero Doar</a>
-        <a href="{% url 'cadastrar-instituicao' %}">Sou Instituição</a>
+  <section class="hero-slider" role="region" aria-label="Destaques">
+    <div class="slide" style="background-image: url('{% static "img/grupo.avif" %}');">
+      <div class="slide-content">
+        <h1>Conectando Solidariedade</h1>
+        <p>Voluntarie-se para causas que combinam com você. Faça parte!</p>
+        <div class="botoes">
+          <a href="#">Seja Doador</a>
+          <a href="{% url 'historias-inspiradoras' %}">Veja Histórias</a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="slide" style="background-image: url('{% static "img/grupo.jpg" %}');">
-    <div class="slide-content">
-      <h1>Conectando Solidariedade</h1>
-      <p>Voluntarie-se para causas que combinam com você. Faça parte!</p>
-      <div class="botoes">
-        <a href="#">Seja Voluntário</a>
-        <a href=>Veja Histórias</a>
-      </div>
-    </div>
-  </div>
 
-  <button class="prev" onclick="changeSlide(-1)">‹</button>
-  <button class="next" onclick="changeSlide(1)">›</button>
-</section>
-{% endblock header %}
-
-
-  <section class="conteudo">
-    {% block conteudo %}
-    <h3>Título do conteúdo</h3>
-    <div>
-      Conteúdo, formulários, etc
-    </div>
-    {% endblock conteudo %}
   </section>
+  {% endblock header %}
 
+  <!-- COMO DOAR -->
   {% block voluntario_doador %}
-  <section class="voluntario-doador-section">
-    <div class="conteudo-voluntario">
-      <h2 class="titulo">VOLUNTÁRIOS E DOADORES</h2>
-      <p><strong>Abrace uma nova forma de solidariedade!</strong></p>
-      <p>
-        Explore diferentes causas, filtre e <strong>selecione aquelas que mais se alinham aos seus valores</strong>, seja por meio de <strong>trabalho voluntário ou doações</strong>.
-        Com o auxílio da <strong>geolocalização</strong>, o aplicativo indica as <strong>instituições mais próximas de você</strong>, apresentando as <strong>necessidades específicas de cada uma</strong>, de acordo com o seu perfil.
-      </p>
-      <a href="" class="botao-voluntario">Seja voluntário</a>
+  <section class="como-doar">
+    <h2>COMO DOAR</h2>
+    <p>Quer contribuir com o trabalho realizado na Fundação Solidariedade?</p>
+    <div class="opcoes-doacao">
+      <div class="item-doacao">
+        <img src="{% static 'img/imposto.png' %}" alt="Ícone imposto de renda">
+        <h3>Imposto de Renda</h3>
+      </div>
+      <div class="item-doacao">
+        <img src="{% static 'img/porquinho.png' %}" alt="Ícone depósito bancário">
+        <h3>Depósito Bancário</h3>
+      </div>
+      <div class="item-doacao">
+        <img src="{% static 'img/doar.png' %}" alt="Ícone bens de consumo">
+        <h3>Bens de Consumo</h3>
+      </div>
     </div>
   </section>
+  {% endblock voluntario_doador %}
 
-  <section class="como-doar">
-  <h2 class="titulo-como-doar">COMO DOAR</h2>
-  <p class="descricao-como-doar">Quer contribuir com o trabalho realizado na Fundação Solidariedade?</p>
-  <div class="opcoes-doacao">
-    <div class="item-doacao">
-      <img src="{% static 'img/imposto.png' %}" alt="Imposto de Renda">
-      <h3>Imposto de Renda</h3>
-    </div>
-    <div class="item-doacao">
-      <img src="{% static 'img/porquinho.png' %}" alt="Depósito Bancário">
-      <h3>Depósito Bancário</h3>
-    </div>
-    <div class="item-doacao">
-      <img src="{% static 'img/doar.png' %}" alt="Bens de Consumo">
-      <h3>Bens de Consumo</h3>
-    </div>
-  </div>
-</section>
-{% endblock voluntario_doador %}
-
-{% block depoimentos %}
+  <!-- DEPOIMENTOS -->
+  {% block depoimentos %}
   <section class="testimonials">
     <h2>Histórias e Frases Inspiradoras</h2>
     <div class="carousel-wrapper">
@@ -133,11 +109,11 @@
         </div>
         <button class="nav-button right" onclick="scrollCarousel(1)">›</button>
     </div>
-  </section>  
-{% endblock depoimentos %}
+  </section>
+  {% endblock depoimentos %}
 
-
-{% block faq %}
+  <!-- FAQ -->
+  {% block faq %}
   <section class="faq-section">
     <h2>FAQ - Perguntas Frequentes</h2>
 
@@ -183,48 +159,65 @@
       </div>
     </div>
   </section>
-  
-{% endblock faq %}
 
+    <!-- Restante das perguntas já existentes -->
+  </section>
+  {% endblock faq %}
 
+  <!-- FOOTER -->
   <footer>
-    <p>Entre em contato: contato@solly.org.br | © 2025 Solly. Todos os direitos reservados.</p>
+    <p>Entre em contato: <a href="mailto:contato@solly.org.br">contato@solly.org.br</a> | © 2025 Solly</p>
     <p>“Fazer o bem é o melhor investimento que existe.”</p>
+    <button id="btnTop" onclick="scrollToTop()" aria-label="Voltar ao topo">↑</button>
   </footer>
 
-
+  <!-- MENSAGENS DJANGO -->
   <script>
-    // Exibir mensagens como alertas
     {% if messages %}
-    var msg = [];
       {% for message in messages %}
-        msg.push("{{ message }}");
+        alert("{{ message }}");
       {% endfor %}
-      msg.forEach(msg => {
-        alert(msg);
-      });
     {% endif %}
-
   </script>
 
+  <!-- SCRIPTS -->
   <script>
-  let currentSlide = 0;
-  const slides = document.querySelectorAll(".slide");
+    // Menu responsivo
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("open");
+    }
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === index);
+    // Carrossel
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".slide");
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+      });
+    }
+    function changeSlide(direction) {
+      currentSlide = (currentSlide + direction + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+    setInterval(() => changeSlide(1), 10000);
+
+    // FAQ interativo
+    document.querySelectorAll(".faq-question").forEach(button => {
+      button.addEventListener("click", () => {
+        button.nextElementSibling.classList.toggle("open");
+      });
     });
-  }
 
-  function changeSlide(direction) {
-    currentSlide = (currentSlide + direction + slides.length) % slides.length;
-    showSlide(currentSlide);
-  }
-
-  setInterval(() => changeSlide(1), 10000); // troca automática a cada 7s
-</script>
+    // Voltar ao topo
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.addEventListener("scroll", () => {
+      document.getElementById("btnTop").style.display = window.scrollY > 300 ? "block" : "none";
+    });
+  </script>
 
 </body>
-
 </html>
+

@@ -1,47 +1,117 @@
-    :root {
-      --cor-fundo: #fff9f8;
-      --cor-destaque: #ffcce0;
-      --cor-clara: #e6f3f4;
-      --cor-titulo: #444;
-      --cor-menu: #666;
-      --cor-botao: #f89dbb;
-    }
+:root {
+  --cor-pastel-clara: #F8F8F8; /* Branco suave */
+  --cor-pastel-rosa: #FFD1DC; /* Rosa pastel */
+  --cor-pastel-azul: #B0E0E6; /* Azul pastel */
+  --cor-pastel-verde: #D8F8E1; /* Verde pastel */
+  --cor-pastel-amarelo: #FFFACD; /* Amarelo pastel */
+  --cor-texto-principal: #555555; /* Cinza suave para texto */
+  --cor-texto-secundario: #888888; /* Cinza mais claro para detalhes */
+  --cor-borda: #E0E0E0; /* Borda suave */
+  --cor-sombra: rgba(0, 0, 0, 0.08); /* Sombra leve */
+}
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif; /* Mantendo a fonte atual, que combina */
+  background-color: var(--cor-pastel-clara);
+  color: var(--cor-texto-principal);
+}
+header {
+  background-color: var(--cor-pastel-rosa); /* Ou outra cor pastel de sua escolha */
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 10px var(--cor-sombra);
+}
+.logo {
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #A0527A; /* Um tom mais vibrante para o logo, mas ainda harmonioso */
+  font-family: 'Ubuntu', sans-serif;
+}
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--cor-fundo);
-      color: var(--cor-titulo);
-    }
+nav a {
+  margin-left: 30px;
+  text-decoration: none;
+  color: var(--cor-texto-principal);
+  font-size: 1em;
+  transition: color 0.3s ease;
+}
+nav a:hover {
+  color: #F48FB1; /* Um rosa um pouco mais forte no hover */
+}
+.action-btn {
+  background-color: var(--cor-pastel-azul); /* Exemplo de botão com azul pastel */
+  color: var(--cor-texto-principal);
+  text-decoration: none;
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px var(--cor-sombra);
+  transition: all 0.3s ease;
+}
+.action-btn:hover {
+  background-color: #90C0C8; /* Um azul um pouco mais forte no hover */
+  transform: translateY(-2px);
+}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 25px 40px;
-      background-color: transparent;
-    }
+footer {
+  background-color: var(--cor-pastel-rosa); /* Ou outra cor pastel */
+  text-align: center;
+  padding: 30px;
+  color: var(--cor-texto-principal);
+  font-size: 0.9em;
+  font-style: italic;
+  box-shadow: 0 -2px 10px var(--cor-sombra);
+}
+/* Ajustes para formulários */
+form {
+  background-color: var(--cor-pastel-clara);
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px var(--cor-sombra);
+  border: 1px solid var(--cor-borda);
+}
+form input,
+form textarea,
+form select {
+  border: 1px solid var(--cor-borda);
+  background-color: #FFFFFF; /* Branco puro para campos de entrada */
+}
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: var(--cor-pastel-rosa); /* Foco com cor pastel */
+}
+  
 
-    .logo {
-      font-size: 2.2em;
-      font-weight: bold;
-      color: #f78ca2;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-    }
+form button {
+  background-color: var(--cor-pastel-rosa);
+  color: white; /* Texto branco para contraste no botão */
+}
+form button:hover {
+  background-color: #F48FB1;
+}
+/* Tabelas */
+.conteudo table th {
+  background-color: var(--cor-pastel-azul); /* Cabeçalho da tabela com azul pastel */
+  color: var(--cor-texto-principal);
+}
+.conteudo table tr:nth-child(even) {
+  background-color: var(--cor-pastel-clara); /* Linhas pares mais claras */
+}
 
-    nav a {
-      margin-left: 30px;
-      text-decoration: none;
-      color: var(--cor-menu);
-      font-size: 1em;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: var(--cor-botao);
-    }
-
-    .hero {
+.conteudo table tr:hover {
+  background-color: var(--cor-pastel-verde); /* Hover com verde pastel */
+}
+/* Blog Post (Histórias Inspiradoras) */
+.blog-post {
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-pastel-clara);
+    box-shadow: 0 2px 5px var(--cor-sombra);
+}
+.hero {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -655,4 +725,90 @@ form button:hover {
 
 .blog-post a {
     margin-right: 10px;
+}
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #da8bc6; /* Azul bonito */
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* MENU */
+#menu {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-btn {
+  position: relative;
+  padding: 10px 18px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  background: transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Efeito hover moderno */
+.nav-btn::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.2);
+  transition: width 0.3s ease-in-out;
+  z-index: 0;
+}
+
+.nav-btn:hover::before {
+  width: 100%;
+}
+
+.nav-btn:hover {
+  transform: scale(1.05);
+}
+
+/* MOBILE */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  #menu {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: #2b6cb0;
+    width: 220px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    padding: 20px;
+  }
+  #menu.open {
+    transform: translateX(0);
+  }
+  .menu-toggle {
+    display: block;
+  }
 }
