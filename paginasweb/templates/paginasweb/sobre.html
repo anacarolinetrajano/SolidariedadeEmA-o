@@ -13,18 +13,25 @@
   <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
 <body>
-<header>
-    <div class="logo">Solly</div>
-    <nav>
-      <a href="{% url "index" %}">Início</a>
-      <a href="{% url "listar-doacao" %}">Doações</a>
-      <a href="{% url "listar-doador" %}">Doadores</a>
-      <a href="{% url "listar-instituicao" %}">Instituições</a>
-      <a href="{% url "listar-historia-inspiradora" %}">Histórias Inspiradoras</a>
-      <a href="#">Contato</a>
-      <a href="{% url 'sobre' %}">Sobre</a>
-    </nav>
-  </header>
+    <header>
+        <div class="logo" aria-label="Logo Solly">Solly</div>
+        <nav id="menu">
+          <a href="{% url 'index' %}" class="nav-btn">Início</a>
+          <a href="{% url 'doacaoList' %}" class="nav-btn">Doações</a>
+          <a href="{% url 'doadorList' %}" class="nav-btn">Doadores</a>
+          <a href="{% url 'instituicaoList' %}" class="nav-btn">Instituições</a>
+          <a href="{% url 'historias-inspiradorasList' %}" class="nav-btn">Histórias</a>
+          <a href="#" class="nav-btn">Contato</a>
+          <a href="{% url 'sobre' %}" class="nav-btn">Sobre</a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="nav-btn">Sair</a>
+          {% else %}
+            <a href="{% url 'login' %}" class="nav-btn">Entrar</a>
+            <a href="{% url 'registrar' %}" class="nav-btn btn-principal">Registrar</a>
+          {% endif %}
+        </nav>
+        <button class="menu-toggle" aria-label="Abrir Menu" onclick="toggleMenu()">☰</button>
+      </header>
   <br>
 <style>
     body {

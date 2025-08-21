@@ -11,6 +11,7 @@
   <meta property="og:description" content="Doe, voluntarie-se e ajude a transformar vidas com a plataforma Solly.">
   <meta property="og:image" content="{% static 'img/doação.png' %}">
   <meta property="og:type" content="website">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
 <body>
@@ -20,54 +21,73 @@
     <div class="logo" aria-label="Logo Solly">Solly</div>
     <nav id="menu">
       <a href="{% url 'index' %}" class="nav-btn">Início</a>
-      <a href="{% url 'listar-doacao' %}" class="nav-btn">Doações</a>
-      <a href="{% url 'listar-doador' %}" class="nav-btn">Doadores</a>
-      <a href="{% url 'listar-instituicao' %}" class="nav-btn">Instituições</a>
-      <a href="{% url 'listar-historia-inspiradora' %}" class="nav-btn">Histórias</a>
+      <a href="{% url 'doacaoList' %}" class="nav-btn">Doações</a>
+      <a href="{% url 'doadorList' %}" class="nav-btn">Doadores</a>
+      <a href="{% url 'instituicaoList' %}" class="nav-btn">Instituições</a>
+      <a href="{% url 'historias-inspiradorasList' %}" class="nav-btn">Histórias</a>
       <a href="#" class="nav-btn">Contato</a>
       <a href="{% url 'sobre' %}" class="nav-btn">Sobre</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="nav-btn">Sair</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="nav-btn">Entrar</a>
+        <a href="{% url 'registrar' %}" class="nav-btn btn-principal">Registrar</a>
+      {% endif %}
     </nav>
     <button class="menu-toggle" aria-label="Abrir Menu" onclick="toggleMenu()">☰</button>
   </header>
 
-  <!-- HERO SLIDER -->
-  {% block header %}
-  <section class="hero-slider" role="region" aria-label="Destaques">
-    <div class="slide" style="background-image: url('{% static "img/grupo.avif" %}');">
-      <div class="slide-content">
-        <h1>Conectando Solidariedade</h1>
-        <p>Voluntarie-se para causas que combinam com você. Faça parte!</p>
-        <div class="botoes">
-          <a href="#">Seja Doador</a>
-          <a href="{% url 'historias-inspiradoras' %}">Veja Histórias</a>
-        </div>
-      </div>
-    </div>
-
-  </section>
-  {% endblock header %}
-
-  <!-- COMO DOAR -->
-  {% block voluntario_doador %}
-  <section class="como-doar">
-    <h2>COMO DOAR</h2>
-    <p>Quer contribuir com o trabalho realizado na Fundação Solidariedade?</p>
-    <div class="opcoes-doacao">
-      <div class="item-doacao">
-        <img src="{% static 'img/imposto.png' %}" alt="Ícone imposto de renda">
-        <h3>Imposto de Renda</h3>
-      </div>
-      <div class="item-doacao">
-        <img src="{% static 'img/porquinho.png' %}" alt="Ícone depósito bancário">
-        <h3>Depósito Bancário</h3>
-      </div>
-      <div class="item-doacao">
-        <img src="{% static 'img/doar.png' %}" alt="Ícone bens de consumo">
-        <h3>Bens de Consumo</h3>
+  <section class="text-center bg-light py-5" style="background-image: url('{% static "img/grupo.avif" %}'); background-size: cover; background-position: center;">
+    <div class="container text-white p-5" style="background: rgba(0,0,0,0.6); border-radius: 10px;">
+      <h1 class="display-4 fw-bold">Transforme vidas com a sua solidariedade</h1>
+      <p class="lead">Doe, voluntarie-se ou apoie instituições sociais em todo o Brasil.</p>
+      <div class="mt-4">
+        <a href="{% url 'cadastrar-doador' %}" class="btn btn-primary btn-lg me-2">Quero Doar</a>
+        <a href="{% url 'cadastrar-instituicao' %}" class="btn btn-outline-light btn-lg">Sou Instituição</a>
       </div>
     </div>
   </section>
-  {% endblock voluntario_doador %}
+  
+
+  {% block conteudo %}
+  <section class="impacto">
+    <h2>Nosso Impacto</h2>
+    <div class="impacto-cards">
+      <div class="impacto-item">
+        <h3>+500</h3>
+        <p>Doadores ativos</p>
+      </div>
+      <div class="impacto-item">
+        <h3>+200</h3>
+        <p>Instituições cadastradas</p>
+      </div>
+      <div class="impacto-item">
+        <h3>+10.000</h3>
+        <p>Pessoas ajudadas</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SEÇÃO PROJETOS EM DESTAQUE -->
+  <section class="projetos">
+    <h2>Projetos em Destaque</h2>
+    <div class="projetos-cards">
+      <div class="projeto">
+        <img src="{% static 'img/projeto1.jpg' %}" alt="Projeto Educação para Todos">
+        <h3>Educação para Todos</h3>
+        <p>Oferece reforço escolar gratuito para crianças carentes.</p>
+        <a href="#" class="btn-secundario">Apoiar Projeto</a>
+      </div>
+      <div class="projeto">
+        <img src="{% static 'img/projeto2.jpg' %}" alt="Ação Contra a Fome">
+        <h3>Ação Contra a Fome</h3>
+        <p>Distribuição de cestas básicas em comunidades vulneráveis.</p>
+        <a href="#" class="btn-secundario">Apoiar Projeto</a>
+      </div>
+    </div>
+  </section>
+  {% endblock conteudo %}
+
 
   <!-- DEPOIMENTOS -->
   {% block depoimentos %}
@@ -114,6 +134,7 @@
 
   <!-- FAQ -->
   {% block faq %}
+  
   <section class="faq-section">
     <h2>FAQ - Perguntas Frequentes</h2>
 
@@ -159,14 +180,17 @@
       </div>
     </div>
   </section>
-
-    <!-- Restante das perguntas já existentes -->
-  </section>
   {% endblock faq %}
 
   <!-- FOOTER -->
   <footer>
     <p>Entre em contato: <a href="mailto:contato@solly.org.br">contato@solly.org.br</a> | © 2025 Solly</p>
+    <div class="footer-links">
+      <a href="#">Política de Privacidade</a> | 
+      <a href="#">Termos de Uso</a> | 
+      <a href="#">Facebook</a> | 
+      <a href="#">Instagram</a>
+    </div>
     <p>“Fazer o bem é o melhor investimento que existe.”</p>
     <button id="btnTop" onclick="scrollToTop()" aria-label="Voltar ao topo">↑</button>
   </footer>
@@ -201,13 +225,6 @@
       showSlide(currentSlide);
     }
     setInterval(() => changeSlide(1), 10000);
-
-    // FAQ interativo
-    document.querySelectorAll(".faq-question").forEach(button => {
-      button.addEventListener("click", () => {
-        button.nextElementSibling.classList.toggle("open");
-      });
-    });
 
     // Voltar ao topo
     function scrollToTop() {

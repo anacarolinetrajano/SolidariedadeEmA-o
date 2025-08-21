@@ -8,11 +8,13 @@ from .views import (
     Historia_InspiradorasCreate, Historia_InspiradorasUpdate, Historia_InspiradorasDelete, 
     DoadorList, InstituicaoList, DoacaoList, Historia_InspiradorasList, StatusList
 )
-
+from .views import CadastroUsuarioView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    #Criar rota para página de login
+    # Rota para o cadastro de usuário
+    path("registrar/", CadastroUsuarioView.as_view(), name="registrar"),
+    
     path("login/", auth_views.LoginView.as_view(
          template_name = 'paginasweb/form.html', 
           extra_context = {'titulo' : "Autentificação ", "botao" : "Entrar"}
@@ -49,11 +51,11 @@ urlpatterns = [
     path("deletar/status/<int:pk>/", StatusDelete.as_view(), name="deletar-status"),
     path("deletar/historia-inspiradora/<int:pk>/", Historia_InspiradorasDelete.as_view(), name="deletar-historia-inspiradora"),
 
-    path("listar/doador/", DoadorList.as_view(), name="listar-doador"),
-    path("listar/instituicao/", InstituicaoList.as_view(), name="listar-instituicao"),
-    path("listar/doacao/", DoacaoList.as_view(), name="listar-doacao"),
-    path("listar/status/", StatusList.as_view(), name="listar-status"),
-    path("listar/historias-inspiradoras/", Historia_InspiradorasList.as_view(), name="listar-historia-inspiradora"),
+    path("listar/doador/", DoadorList.as_view(), name="doadorList"),
+    path("listar/instituicao/", InstituicaoList.as_view(), name="instituicaoList"),
+    path("listar/doacao/", DoacaoList.as_view(), name="doacaoList"),
+    path("listar/status/", StatusList.as_view(), name="statusList"),
+    path("listar/historias-inspiradoras/", Historia_InspiradorasList.as_view(), name="historias-inspiradorasList"),
 
 
 ]
