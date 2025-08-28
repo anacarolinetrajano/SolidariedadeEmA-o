@@ -1,240 +1,403 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Solly - Solidariedade em Ação</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Doe, voluntarie-se e ajude a transformar vidas com a plataforma Solly. Solidariedade em ação em todo o Brasil.">
-  <meta property="og:title" content="Solly - Solidariedade em Ação">
-  <meta property="og:description" content="Doe, voluntarie-se e ajude a transformar vidas com a plataforma Solly.">
-  <meta property="og:image" content="{% static 'img/doação.png' %}">
-  <meta property="og:type" content="website">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solly - Conectando doadores a instituições</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{% static 'css/estilo.css' %}" rel="stylesheet">
 </head>
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="logo" aria-label="Logo Solly">Solly</div>
-    <nav id="menu">
-      <a href="{% url 'index' %}" class="nav-btn">Início</a>
-      <a href="{% url 'doacaoList' %}" class="nav-btn">Doações</a>
-      <a href="{% url 'doadorList' %}" class="nav-btn">Doadores</a>
-      <a href="{% url 'instituicaoList' %}" class="nav-btn">Instituições</a>
-      <a href="{% url 'historias-inspiradorasList' %}" class="nav-btn">Histórias</a>
-      <a href="#" class="nav-btn">Contato</a>
-      <a href="{% url 'sobre' %}" class="nav-btn">Sobre</a>
-      {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="nav-btn">Sair</a>
-      {% else %}
-        <a href="{% url 'login' %}" class="nav-btn">Entrar</a>
-        <a href="{% url 'registrar' %}" class="nav-btn btn-principal">Registrar</a>
-      {% endif %}
-    </nav>
-    <button class="menu-toggle" aria-label="Abrir Menu" onclick="toggleMenu()">☰</button>
-  </header>
-
-  <section class="text-center bg-light py-5" style="background-image: url('{% static "img/grupo.avif" %}'); background-size: cover; background-position: center;">
-    <div class="container text-white p-5" style="background: rgba(0,0,0,0.6); border-radius: 10px;">
-      <h1 class="display-4 fw-bold">Transforme vidas com a sua solidariedade</h1>
-      <p class="lead">Doe, voluntarie-se ou apoie instituições sociais em todo o Brasil.</p>
-      <div class="mt-4">
-        <a href="{% url 'cadastrar-doador' %}" class="btn btn-primary btn-lg me-2">Quero Doar</a>
-        <a href="{% url 'cadastrar-instituicao' %}" class="btn btn-outline-light btn-lg">Sou Instituição</a>
-      </div>
-    </div>
-  </section>
-  
-
-  {% block conteudo %}
-  <section class="impacto">
-    <h2>Nosso Impacto</h2>
-    <div class="impacto-cards">
-      <div class="impacto-item">
-        <h3>+500</h3>
-        <p>Doadores ativos</p>
-      </div>
-      <div class="impacto-item">
-        <h3>+200</h3>
-        <p>Instituições cadastradas</p>
-      </div>
-      <div class="impacto-item">
-        <h3>+10.000</h3>
-        <p>Pessoas ajudadas</p>
-      </div>
-    </div>
-  </section>
-  
-  <!-- SEÇÃO PROJETOS EM DESTAQUE -->
-  <section class="projetos">
-    <h2>Projetos em Destaque</h2>
-    <div class="projetos-cards">
-      <div class="projeto">
-        <img src="{% static 'img/projeto1.jpg' %}" alt="Projeto Educação para Todos">
-        <h3>Educação para Todos</h3>
-        <p>Oferece reforço escolar gratuito para crianças carentes.</p>
-        <a href="#" class="btn-secundario">Apoiar Projeto</a>
-      </div>
-      <div class="projeto">
-        <img src="{% static 'img/projeto2.jpg' %}" alt="Ação Contra a Fome">
-        <h3>Ação Contra a Fome</h3>
-        <p>Distribuição de cestas básicas em comunidades vulneráveis.</p>
-        <a href="#" class="btn-secundario">Apoiar Projeto</a>
-      </div>
-    </div>
-  </section>
-  {% endblock conteudo %}
-
-
-  <!-- DEPOIMENTOS -->
-  {% block depoimentos %}
-  <section class="testimonials">
-    <h2>Histórias e Frases Inspiradoras</h2>
-    <div class="carousel-wrapper">
-        <button class="nav-button left" onclick="scrollCarousel(-1)">‹</button>
-        <div class="carousel" id="carousel">
-
-            <div class="testimonial">
-                <div class="quote">“</div>
-                <p>Eu cheguei até vocês pelo aplicativo Solidarizando e tá sendo uma experiência incrível, magnífica mesmo...</p>
-                <img src="https://i.pravatar.cc/60?img=1" alt="Tamires">
-                <div class="name">Tamires</div>
-                <div class="role">Voluntária</div>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold flex items-center">
+                    <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+                    </svg>
+                    Doação Solidária
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#inicio" class="hover:text-gray-200 transition-colors">Início</a>
+                    <a href="#como-funciona" class="hover:text-gray-200 transition-colors">Como Funciona</a>
+                    <a href="#instituicoes" class="hover:text-gray-200 transition-colors">Instituições</a>
+                    <a href="#doar" class="hover:text-gray-200 transition-colors">Doar</a>
+                    <a href="#cadastrar" class="hover:text-gray-200 transition-colors">Cadastrar</a>
+                    <a href="sobre" class="hover:text-gray-200 transition-colors">Sobre</a>
             </div>
+        </nav>
+    </header>
 
-            <div class="testimonial">
-                <div class="quote">“</div>
-                <p>Esse app me ajudou muito a participar de certas missões, que eu tinha muita vontade de fazer, mas não sabia como...</p>
-                <img src="https://i.pravatar.cc/60?img=2" alt="Carol">
-                <div class="name">Carol</div>   
-                <div class="role">Voluntária</div>
-            </div>        
-            <div class="testimonial">
-                <div class="quote">“</div>
-                <p>Eu sempre quis ajudar, mas não sabia como. Com o Solidarizando, encontrei a oportunidade perfeita para fazer a diferença.</p>
-                <img src="https://i.pravatar.cc/60?img=3" alt="João">
-                <div class="name">João</div>    
-                <div class="role">Doador</div>
-            </div>
-            <div class="testimonial">
-                <div class="quote">“</div>
-                <p>O Solidarizando me conectou com pessoas incríveis e projetos que realmente fazem a diferença. É gratificante ver o impacto das nossas ações.</p>
-                <img src="https://i.pravatar.cc/60?img=4" alt="Ana">
-                <div class="name">Ana</div>
-                <div class="role">Doadora</div>
+    <!-- Hero Section -->
+    <section id="inicio" class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Faça a Diferença com uma Doação</h1>
+            <p class="text-xl md:text-2xl mb-8">Conectamos doadores a instituições que realmente precisam de ajuda</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#doar" class="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                    Quero Doar
+                </a>
+                <a href="#cadastrar" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
+                    Sou Instituição
+                </a>
             </div>
         </div>
-        <button class="nav-button right" onclick="scrollCarousel(1)">›</button>
-    </div>
-  </section>
-  {% endblock depoimentos %}
+    </section>
 
-  <!-- FAQ -->
-  {% block faq %}
-  
-  <section class="faq-section">
-    <h2>FAQ - Perguntas Frequentes</h2>
+    <!-- How it Works -->
+    <section id="como-funciona" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Como Funciona</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Cadastro</h3>
+                    <p class="text-gray-600">Instituições se cadastram fornecendo informações completas sobre seu trabalho</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Escolha</h3>
+                    <p class="text-gray-600">Doadores escolhem a instituição que desejam apoiar baseado em suas causas</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Doação</h3>
+                    <p class="text-gray-600">Doações são processadas de forma segura e transparente diretamente para a instituição</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="faq-item">
-      <button class="faq-question">EM QUAL REGIÃO A SOLIDARIZANDO ESTÁ DISPONÍVEL PARA ADESÃO DAS INSTITUIÇÕES?</button>
-      <div class="faq-answer">
-        <p>Atualmente a plataforma está disponível em todo o território nacional, com foco em instituições cadastradas em áreas de maior vulnerabilidade.</p>
+  </div>
+  <div class="story-card">
+      <div class="story-header">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0e363574-18c7-4f82-ab72-e8c4acbebba7.png" alt="João Santos - Beneficiário de programa de alimentação comunitária" class="story-avatar" />
+          <div>
+              <h4>João Santos</h4>
+              <p>Beneficiário</p>
+          </div>
       </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">HÁ ALGUM CUSTO NA SOLIDARIZANDO?</button>
-      <div class="faq-answer">
-        <p>Não, tanto para os doadores quanto para as instituições, o uso da plataforma é totalmente gratuito.</p>
+      <p>"Graças à solidariedade de pessoas que nunca conheci, consegui terminar meus estudos e hoje posso retribuir ajudando outros jovens."</p>
+  </div>
+  <div class="story-card">
+      <div class="story-header">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bf9e2586-09ae-4e41-bb93-5b5e54a0716c.png" alt="Ana Costa - Organizadora de campanhas de arrecadação comunitária" class="story-avatar" />
+          <div>
+              <h4>Ana Costa</h4>
+              <p>Organizadora</p>
+          </div>
       </div>
+      <p>"Mobilizamos toda a comunidade para arrecadar mais de 2 toneladas de alimentos. A união faz a força e transforma realidades."</p>
+  </div>
+</div>
+</div>
+</section>
+
+    <!-- Institutions -->
+    <section id="instituicoes" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Instituições Cadastradas</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="institutions-container">
+                <!-- Institutions will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="doar" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Faça sua Doação</h2>
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 donation-form">
+                <form id="donation-form">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Escolha a Instituição</label>
+                        <select id="institution-select" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+                            <option value="">Selecione uma instituição...</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Valor da Doação (R$)</label>
+                        <input type="number" min="10" step="5" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Ex: 50,00" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Nome Completo</label>
+                        <input type="text" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-500 focus:border-transparent" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">CPF</label>
+                        <input type="text" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="000.000.000-00" required>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                        Realizar Doação
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Register Institution -->
+    <section id="cadastrar" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Cadastre sua Instituição</h2>
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
+                <form id="institution-form">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Nome da Instituição</label>
+                        <input type="text" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Nome oficial da instituição" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">CNPJ</label>
+                        <input type="text" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="00.000.000/0000-00" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="contato@instituicao.org" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Telefone</label>
+                        <input type="tel" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="(11) 99999-9999" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Causa</label>
+                        <select class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+                            <option value="">Selecione a causa principal...</option>
+                            <option value="educacao">Educação</option>
+                            <option value="saude">Saúde</option>
+                            <option value="animais">Proteção Animal</option>
+                            <option value="ambiental">Meio Ambiente</option>
+                            <option value="social">Assistência Social</option>
+                            <option value="criancas">Crianças e Adolescentes</option>
+                            <option value="idosos">Idosos</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Descrição da Instituição</label>
+                        <textarea class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" rows="4" placeholder="Descreva o trabalho realizado pela instituição..." required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Cadastrar Instituição
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Doação Solidária</h3>
+                    <p class="text-gray-400">Conectando pessoas que querem ajudar com instituições que precisam de apoio.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#inicio" class="text-gray-400 hover:text-white">Início</a></li>
+                        <li><a href="#como-funciona" class="text-gray-400 hover:text-white">Como Funciona</a></li>
+                        <li><a href="#instituicoes" class="text-gray-400 hover:text-white">Instituições</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Ações</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#doar" class="text-gray-400 hover:text-white">Fazer Doação</a></li>
+                        <li><a href="#cadastrar" class="text-gray-400 hover:text-white">Cadastrar Instituição</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contato</h4>
+                    <p class="text-gray-400">contato@doacaosolidaria.org</p>
+                    <p class="text-gray-400">(11) 99999-9999</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2024 Doação Solidária. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md mx-4 text-center">
+            <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Doação Realizada!</h3>
+            <p class="text-gray-600 mb-6">Sua doação foi processada com sucesso. Obrigado por fazer a diferença!</p>
+            <button onclick="closeModal()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+                Fechar
+            </button>
+        </div>
     </div>
 
-    <div class="faq-item">
-      <button class="faq-question">COMO FUNCIONA O PROCESSO DE ADESÃO PARA INSTITUIÇÕES NA SOLIDARIZANDO?</button>
-      <div class="faq-answer">
-        <p>A instituição preenche um formulário de cadastro com seus dados, que passam por uma validação da equipe antes da liberação.</p>
-      </div>
-    </div>
+    <script>
+      // Sample institutions data
+      const institutions = [
+          {
+              id: 1,
+              name: "Casa do Bem",
+              cause: "Assistência Social",
+              description: "Atendemos crianças em situação de vulnerabilidade com alimentação, educação e cuidado",
+              image: "{% static 'img/crianças.jpg' %}", // Using Django static tag
+              alt: "Crianças sorridentes participando de atividades educacionais em sala de aula colorida com livros e materiais didáticos"
+          },
+          {
+              id: 2,
+              name: "Projeto Animal Livre",
+              cause: "Proteção Animal",
+              description: "Resgatamos, tratamos e encontramos lares para animais abandonados",
+              image: "{% static 'img/animais.jpg' %}", // Using Django static tag
+              alt: "Cães e gatos resgatados recebendo cuidados veterinários em abrigo limpo e organizado com voluntários dedicados"
+          },
+          {
+              id: 3,
+              name: "Educação para Todos",
+              cause: "Educação",
+              description: "Oferecemos aulas gratuitas e material didático para comunidades carentes",
+              image: "{% static 'img/estudo.jpg' %}", // Using Django static tag
+              alt: "Estudantes diversificados em sala de aula moderna com computadores e professora ensinando matemática no quadro"
+          },
+          {
+              id: 4,
+              name: "Saúde em Ação",
+              cause: "Saúde",
+              description: "Prestamos atendimento médico gratuito em comunidades remotas",
+              image: "{% static 'img/saúde.jpg' %}", // Using Django static tag
+              alt: "Equipe médica realizando atendimento em posto de saúde comunitário com pacientes em fila organizada"
+          },
+          {
+              id: 5,
+              name: "Verde Vida",
+              cause: "Meio Ambiente",
+              description: "Promovemos a conservação ambiental e reflorestamento de áreas degradadas",
+              image: "{% static 'img/floresta.jpg' %}", // Placeholder for missing image
+              alt: "Voluntários plantando árvores jovens em área de reflorestamento com equipamentos de jardinagem e sorrisos"
+          },
+          {
+              id: 6,
+              name: "Lar dos Idosos",
+              cause: "Idosos",
+              description: "Oferecemos moradia e cuidados para idosos em situação de abandono",
+              image: "{% static 'img/idoso.jpg' %}", // Placeholder for missing image
+              alt: "Idosos participando de atividades recreativas em centro de convivência com jardim bem cuidado"
+          }
+      ];
 
-    <div class="faq-item">
-      <button class="faq-question">COMO FUNCIONA A PLATAFORMA SOCIAL SOLIDARIZANDO?</button>
-      <div class="faq-answer">
-        <p>Ela conecta doadores, voluntários e instituições, promovendo campanhas, doações diretas e oportunidades de voluntariado.</p>
-      </div>
-    </div>
+      // Load institutions
+      function loadInstitutions() {
+          const container = document.getElementById('institutions-container');
+          const select = document.getElementById('institution-select');
+          
+          institutions.forEach(inst => {
+              // Create card for institutions section
+              const card = document.createElement('div');
+              // Added Bootstrap card and shadow classes
+              card.className = 'card institution-card shadow-sm overflow-hidden'; 
+              card.innerHTML = `
+                  <img src="${inst.image}" alt="${inst.alt}" class="card-img-top w-full h-48 object-cover" onerror="this.src='https://placehold.co/400x300'">
+                  <div class="card-body p-4">
+                      <h3 class="card-title text-xl font-semibold text-gray-800 mb-2">${inst.name}</h3>
+                      <span class="badge bg-success mb-3">${inst.cause}</span>
+                      <p class="card-text text-gray-600 mb-4">${inst.description}</p>
+                      <button onclick="selectInstitution(${inst.id})" class="btn btn-success w-full py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                          Doar para esta instituição
+                      </button>
+                  </div>
+              `;
+              container.appendChild(card);
+              
+              // Create option for select
+              const option = document.createElement('option');
+              option.value = inst.id;
+              option.textContent = `${inst.name} - ${inst.cause}`;
+              select.appendChild(option);
+          });
+      }
 
-    <div class="faq-item">
-      <button class="faq-question">QUAL A FINALIDADE DA PLATAFORMA SOCIAL SOLIDARIZANDO?</button>
-      <div class="faq-answer">
-        <p>Promover a solidariedade e facilitar a ajuda mútua entre pessoas e organizações que atuam com causas sociais.</p>
-      </div>
-    </div>
+      // Select institution from card click
+      function selectInstitution(id) {
+          const select = document.getElementById('institution-select');
+          select.value = id;
+          document.getElementById('doar').scrollIntoView({ behavior: 'smooth' });
+      }
 
-    <div class="faq-item">
-      <button class="faq-question">QUAIS INSTITUIÇÕES ESTÃO APTAS A SE CADASTRAREM NA PLATAFORMA SOCIAL SOLIDARIZANDO?</button>
-      <div class="faq-answer">
-        <p>ONGs, abrigos, projetos sociais, instituições ambientais, bancos de alimentos e organizações legalmente registradas.</p>
-      </div>
-    </div>
-  </section>
-  {% endblock faq %}
-
-  <!-- FOOTER -->
-  <footer>
-    <p>Entre em contato: <a href="mailto:contato@solly.org.br">contato@solly.org.br</a> | © 2025 Solly</p>
-    <div class="footer-links">
-      <a href="#">Política de Privacidade</a> | 
-      <a href="#">Termos de Uso</a> | 
-      <a href="#">Facebook</a> | 
-      <a href="#">Instagram</a>
-    </div>
-    <p>“Fazer o bem é o melhor investimento que existe.”</p>
-    <button id="btnTop" onclick="scrollToTop()" aria-label="Voltar ao topo">↑</button>
-  </footer>
-
-  <!-- MENSAGENS DJANGO -->
-  <script>
-    {% if messages %}
-      {% for message in messages %}
-        alert("{{ message }}");
-      {% endfor %}
-    {% endif %}
-  </script>
-
-  <!-- SCRIPTS -->
-  <script>
-    // Menu responsivo
-    function toggleMenu() {
-      document.getElementById("menu").classList.toggle("open");
-    }
-
-    // Carrossel
-    let currentSlide = 0;
-    const slides = document.querySelectorAll(".slide");
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
+      // Handle donation form submission
+      document.getElementById('donation-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const institutionId = formData.get('institution-select');
+          
+          if (!institutionId) {
+              alert('Por favor, selecione uma instituição.');
+              return;
+          }
+          
+          // Simulate donation processing
+          const modal = document.getElementById('success-modal');
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+          
+          // Reset form
+          this.reset();
       });
-    }
-    function changeSlide(direction) {
-      currentSlide = (currentSlide + direction + slides.length) % slides.length;
-      showSlide(currentSlide);
-    }
-    setInterval(() => changeSlide(1), 10000);
 
-    // Voltar ao topo
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    window.addEventListener("scroll", () => {
-      document.getElementById("btnTop").style.display = window.scrollY > 300 ? "block" : "none";
-    });
+      // Handle institution form submission
+      document.getElementById('institution-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Simulate registration
+          alert('Cadastro enviado! Entraremos em contato em breve para validar suas informações.');
+          this.reset();
+      });
+
+      // Close modal
+      function closeModal() {
+          const modal = document.getElementById('success-modal');
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', function() {
+          loadInstitutions();
+          
+          // Smooth scrolling for navigation
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+              anchor.addEventListener('click', function (e) {
+                  e.preventDefault();
+                  const target = document.querySelector(this.getAttribute('href'));
+                  if (target) {
+                      target.scrollIntoView({
+                          behavior: 'smooth'
+                      });
+                  }
+              });
+          });
+      });
   </script>
 
 </body>
 </html>
-
