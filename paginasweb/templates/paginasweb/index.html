@@ -1,3 +1,4 @@
+{# FileName: MultipleFiles/index.html #}
 {% load static %}
 
 
@@ -25,9 +26,21 @@
                     <a href="#inicio" class="hover:text-gray-200 transition-colors">Início</a>
                     <a href="#como-funciona" class="hover:text-gray-200 transition-colors">Como Funciona</a>
                     <a href="#instituicoes" class="hover:text-gray-200 transition-colors">Instituições</a>
-                    <a href="#doar" class="hover:text-gray-200 transition-colors">Doar</a>
-                    <a href="#cadastrar" class="hover:text-gray-200 transition-colors">Cadastrar</a>
-                    <a href="sobre" class="hover:text-gray-200 transition-colors">Sobre</a>
+                    
+                    {# --- START MODIFICATION --- #}
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'cadastrar-doacao' %}" class="hover:text-gray-200 transition-colors">Fazer Doação</a>
+                        <a href="{% url 'minhas-doacoes' %}" class="hover:text-gray-200 transition-colors">Minhas Doações</a>
+                        <a href="{% url 'sair' %}" class="hover:text-gray-200 transition-colors">Sair ({{ user.username }})</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="hover:text-gray-200 transition-colors">Login</a>
+                        <a href="{% url 'registrar' %}" class="hover:text-gray-200 transition-colors">Registrar</a>
+                    {% endif %}
+                    {# --- END MODIFICATION --- #}
+
+                    <a href="#cadastrar" class="hover:text-gray-200 transition-colors">Cadastrar Instituição</a> {# This is for institutions to register #}
+                    <a href="{% url 'sobre' %}" class="hover:text-gray-200 transition-colors">Sobre</a>
+                </div>
             </div>
         </nav>
     </header>
@@ -38,9 +51,17 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Faça a Diferença com uma Doação</h1>
             <p class="text-xl md:text-2xl mb-8">Conectamos doadores a instituições que realmente precisam de ajuda</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#doar" class="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                    Quero Doar
-                </a>
+                {# --- START MODIFICATION --- #}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'cadastrar-doacao' %}" class="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                        Quero Doar
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                        Quero Doar (Login Necessário)
+                    </a>
+                {% endif %}
+                {# --- END MODIFICATION --- #}
                 <a href="#cadastrar" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
                     Sou Instituição
                 </a>
@@ -119,41 +140,11 @@
         </div>
     </section>
 
-    <!-- Donation Section -->
-    <section id="doar" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Faça sua Doação</h2>
-            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 donation-form">
-                <form id="donation-form">
-                    <div class="mb-6">
-                        <label class="block text-gray-700 mb-2">Escolha a Instituição</label>
-                        <select id="institution-select" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
-                            <option value="">Selecione uma instituição...</option>
-                        </select>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 mb-2">Valor da Doação (R$)</label>
-                        <input type="number" min="10" step="5" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Ex: 50,00" required>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 mb-2">Nome Completo</label>
-                        <input type="text" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Seu nome completo" required>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 mb-2">Email</label>
-                        <input type="email" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-500 focus:border-transparent" placeholder="seu@email.com" required>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 mb-2">CPF</label>
-                        <input type="text" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="000.000.000-00" required>
-                    </div>
-                    <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                        Realizar Doação
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+    {# --- START MODIFICATION: REMOVED DONATION SECTION FROM INDEX --- #}
+    {# The donation form will now be on the 'cadastrar-doacao' page, which requires login #}
+    {# <section id="doar" class="py-20 bg-white"> ... </section> #}
+    {# --- END MODIFICATION --- #}
+
 
     <!-- Register Institution -->
     <section id="cadastrar" class="py-20 bg-gray-50">
@@ -221,7 +212,15 @@
                 <div>
                     <h4 class="font-semibold mb-4">Ações</h4>
                     <ul class="space-y-2">
-                        <li><a href="#doar" class="text-gray-400 hover:text-white">Fazer Doação</a></li>
+                        {# --- START MODIFICATION --- #}
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'cadastrar-doacao' %}" class="text-gray-400 hover:text-white">Fazer Doação</a></li>
+                            <li><a href="{% url 'minhas-doacoes' %}" class="text-gray-400 hover:text-white">Minhas Doações</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}" class="text-gray-400 hover:text-white">Fazer Doação (Login)</a></li>
+                            <li><a href="{% url 'registrar' %}" class="text-gray-400 hover:text-white">Registrar</a></li>
+                        {% endif %}
+                        {# --- END MODIFICATION --- #}
                         <li><a href="#cadastrar" class="text-gray-400 hover:text-white">Cadastrar Instituição</a></li>
                     </ul>
                 </div>
@@ -237,7 +236,7 @@
         </div>
     </footer>
 
-    <!-- Modal -->
+    <!-- Modal (Keep this for success messages, though it's not directly triggered by the index anymore) -->
     <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-xl p-8 max-w-md mx-4 text-center">
             <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -309,12 +308,11 @@
       // Load institutions
       function loadInstitutions() {
           const container = document.getElementById('institutions-container');
-          const select = document.getElementById('institution-select');
+          // Removed select population as donation form is no longer here
           
           institutions.forEach(inst => {
               // Create card for institutions section
               const card = document.createElement('div');
-              // Added Bootstrap card and shadow classes
               card.className = 'card institution-card shadow-sm overflow-hidden'; 
               card.innerHTML = `
                   <img src="${inst.image}" alt="${inst.alt}" class="card-img-top w-full h-48 object-cover" onerror="this.src='https://placehold.co/400x300'">
@@ -322,49 +320,22 @@
                       <h3 class="card-title text-xl font-semibold text-gray-800 mb-2">${inst.name}</h3>
                       <span class="badge bg-success mb-3">${inst.cause}</span>
                       <p class="card-text text-gray-600 mb-4">${inst.description}</p>
-                      <button onclick="selectInstitution(${inst.id})" class="btn btn-success w-full py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                      {# --- START MODIFICATION --- #}
+                      {# Link to the main donation page, not directly to a form #}
+                      <a href="{% url 'cadastrar-doacao' %}" class="btn btn-success w-full py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
                           Doar para esta instituição
-                      </button>
+                      </a>
+                      {# --- END MODIFICATION --- #}
                   </div>
               `;
               container.appendChild(card);
-              
-              // Create option for select
-              const option = document.createElement('option');
-              option.value = inst.id;
-              option.textContent = `${inst.name} - ${inst.cause}`;
-              select.appendChild(option);
           });
       }
 
-      // Select institution from card click
-      function selectInstitution(id) {
-          const select = document.getElementById('institution-select');
-          select.value = id;
-          document.getElementById('doar').scrollIntoView({ behavior: 'smooth' });
-      }
-
-      // Handle donation form submission
-      document.getElementById('donation-form').addEventListener('submit', function(e) {
-          e.preventDefault();
-          const formData = new FormData(this);
-          const institutionId = formData.get('institution-select');
-          
-          if (!institutionId) {
-              alert('Por favor, selecione uma instituição.');
-              return;
-          }
-          
-          // Simulate donation processing
-          const modal = document.getElementById('success-modal');
-          modal.classList.remove('hidden');
-          modal.classList.add('flex');
-          
-          // Reset form
-          this.reset();
-      });
-
-      // Handle institution form submission
+      // Removed selectInstitution function as donation form is no longer here
+      // Removed donation form submission handler
+      
+      // Handle institution form submission (kept as is)
       document.getElementById('institution-form').addEventListener('submit', function(e) {
           e.preventDefault();
           
@@ -373,7 +344,7 @@
           this.reset();
       });
 
-      // Close modal
+      // Close modal (kept as is)
       function closeModal() {
           const modal = document.getElementById('success-modal');
           modal.classList.add('hidden');
@@ -384,7 +355,7 @@
       document.addEventListener('DOMContentLoaded', function() {
           loadInstitutions();
           
-          // Smooth scrolling for navigation
+          // Smooth scrolling for navigation (kept as is)
           document.querySelectorAll('a[href^="#"]').forEach(anchor => {
               anchor.addEventListener('click', function (e) {
                   e.preventDefault();
