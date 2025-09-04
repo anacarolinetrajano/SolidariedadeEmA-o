@@ -28,9 +28,17 @@
                     <a href="#instituicoes" class="hover:text-gray-200 transition-colors">Instituições</a>
                     
                     {# --- START MODIFICATION --- #}
+                    {# Links que devem estar sempre visíveis #}
+                    <a href="{% url 'cadastrar-doador' %}" class="hover:text-gray-200 transition-colors">Cadastrar Doador</a>
+                    <a href="{% url 'cadastrar-instituicao' %}" class="hover:text-gray-200 transition-colors">Cadastrar Instituição</a>
+                    
                     {% if user.is_authenticated %}
                         <a href="{% url 'cadastrar-doacao' %}" class="hover:text-gray-200 transition-colors">Fazer Doação</a>
                         <a href="{% url 'minhas-doacoes' %}" class="hover:text-gray-200 transition-colors">Minhas Doações</a>
+                        <a href="{% url 'doadorList' %}" class="hover:text-gray-200 transition-colors">Meus Doadores</a>
+                        <a href="{% url 'instituicaoList' %}" class="hover:text-gray-200 transition-colors">Minhas Instituições</a>
+                        <a href="{% url 'historias-inspiradorasList' %}" class="hover:text-gray-200 transition-colors">Minhas Histórias</a>
+                        <a href="{% url 'statusList' %}" class="hover:text-gray-200 transition-colors">Meus Status</a>
                         <a href="{% url 'sair' %}" class="hover:text-gray-200 transition-colors">Sair ({{ user.username }})</a>
                     {% else %}
                         <a href="{% url 'login' %}" class="hover:text-gray-200 transition-colors">Login</a>
@@ -38,7 +46,7 @@
                     {% endif %}
                     {# --- END MODIFICATION --- #}
 
-                    <a href="#cadastrar" class="hover:text-gray-200 transition-colors">Cadastrar Instituição</a> {# This is for institutions to register #}
+                    {# Removido o link #cadastrar daqui, pois já temos o link direto para cadastrar-instituicao #}
                     <a href="{% url 'sobre' %}" class="hover:text-gray-200 transition-colors">Sobre</a>
                 </div>
             </div>
@@ -62,45 +70,10 @@
                     </a>
                 {% endif %}
                 {# --- END MODIFICATION --- #}
-                <a href="#cadastrar" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
+                {# Este botão "Sou Instituição" pode ser mantido ou alterado para o link direto de cadastro de instituição #}
+                <a href="{% url 'cadastrar-instituicao' %}" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
                     Sou Instituição
                 </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- How it Works -->
-    <section id="como-funciona" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Como Funciona</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Cadastro</h3>
-                    <p class="text-gray-600">Instituições se cadastram fornecendo informações completas sobre seu trabalho</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Escolha</h3>
-                    <p class="text-gray-600">Doadores escolhem a instituição que desejam apoiar baseado em suas causas</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Doação</h3>
-                    <p class="text-gray-600">Doações são processadas de forma segura e transparente diretamente para a instituição</p>
-                </div>
             </div>
         </div>
     </section>
@@ -147,6 +120,8 @@
 
 
     <!-- Register Institution -->
+    {# Esta seção pode ser removida se você preferir usar apenas o link no cabeçalho #}
+    {# Ou pode ser mantida como uma seção de formulário direto na página #}
     <section id="cadastrar" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Cadastre sua Instituição</h2>
@@ -213,15 +188,22 @@
                     <h4 class="font-semibold mb-4">Ações</h4>
                     <ul class="space-y-2">
                         {# --- START MODIFICATION --- #}
+                        {# Links que devem estar sempre visíveis #}
+                        <li><a href="{% url 'cadastrar-doador' %}" class="text-gray-400 hover:text-white">Cadastrar Doador</a></li>
+                        <li><a href="{% url 'cadastrar-instituicao' %}" class="text-gray-400 hover:text-white">Cadastrar Instituição</a></li>
+                        
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'cadastrar-doacao' %}" class="text-gray-400 hover:text-white">Fazer Doação</a></li>
                             <li><a href="{% url 'minhas-doacoes' %}" class="text-gray-400 hover:text-white">Minhas Doações</a></li>
+                            <li><a href="{% url 'doadorList' %}" class="text-gray-400 hover:text-white">Meus Doadores</a></li>
+                            <li><a href="{% url 'instituicaoList' %}" class="text-gray-400 hover:text-white">Minhas Instituições</a></li>
+                            <li><a href="{% url 'historias-inspiradorasList' %}" class="text-gray-400 hover:text-white">Minhas Histórias</a></li>
+                            <li><a href="{% url 'statusList' %}" class="text-gray-400 hover:text-white">Meus Status</a></li>
                         {% else %}
-                            <li><a href="{% url 'login' %}" class="text-gray-400 hover:text-white">Fazer Doação (Login)</a></li>
+                            <li><a href="{% url 'login' %}" class="text-gray-400 hover:text-white">Login</a></li>
                             <li><a href="{% url 'registrar' %}" class="text-gray-400 hover:text-white">Registrar</a></li>
                         {% endif %}
                         {# --- END MODIFICATION --- #}
-                        <li><a href="#cadastrar" class="text-gray-400 hover:text-white">Cadastrar Instituição</a></li>
                     </ul>
                 </div>
                 <div>
@@ -300,7 +282,7 @@
               name: "Lar dos Idosos",
               cause: "Idosos",
               description: "Oferecemos moradia e cuidados para idosos em situação de abandono",
-              image: "{% static 'img/idoso.jpg' %}", // Placeholder for missing image
+              image: "{% static 'img/idoso.jpg'}", // Placeholder for missing image
               alt: "Idosos participando de atividades recreativas em centro de convivência com jardim bem cuidado"
           }
       ];

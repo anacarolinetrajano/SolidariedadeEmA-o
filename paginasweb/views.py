@@ -101,9 +101,9 @@ class DoadorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     extra_context = {'titulo' : "Editar Doador", "botao" : "Salvar Alterações"}
     success_message = "Doador atualizado com sucesso!"
 
-    def get_queryset(self):
+    def get_object(self):
         # Only allow editing of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
+        return Doador.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
 
 class InstituicaoUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'paginasweb/form.html'
@@ -113,9 +113,9 @@ class InstituicaoUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     extra_context = {'titulo' : "Editar Instituição", "botao" : "Salvar Alterações"}
     success_message = "Instituição atualizada com sucesso!"
 
-    def get_queryset(self):
+    def get_object(self):
         # Only allow editing of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
+        return Instituicao.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
 
 class StatusUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'paginasweb/form.html'
@@ -136,10 +136,6 @@ class DoacaoUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     extra_context = {'titulo' : "Editar Doação", "botao" : "Salvar Alterações"}
     success_message = "Doação atualizada com sucesso!"
 
-    def get_queryset(self):
-        # Only allow editing of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
-
 class Historia_InspiradorasUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Historia_Inspiradoras
     template_name = 'paginasweb/form.html'
@@ -147,10 +143,6 @@ class Historia_InspiradorasUpdate(SuccessMessageMixin, LoginRequiredMixin, Updat
     success_url = reverse_lazy('historias-inspiradorasList')
     extra_context = {'titulo' : "Editar História Inspiradora", "botao" : "Salvar Alterações"}
     success_message = "História Inspiradora atualizada com sucesso!"
-
-    def get_queryset(self):
-        # Only allow editing of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
 
 # Views para Exclusão (Delete) - Modified to filter by current user
 class DoadorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
@@ -160,13 +152,9 @@ class DoadorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     extra_context = {'titulo' : "Excluir Doador", "botao" : "Confirmar Exclusão"}
     success_message = "Doador excluído com sucesso!"
     
-    def get_queryset(self):
-        # Only allow deleting of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
-
-    def form_valid(self, form):
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
+    def get_object(self):
+        # Only allow editing of records owned by the current user
+        return Doador.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
     
 class InstituicaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     template_name = 'paginasweb/form.html'
@@ -175,13 +163,9 @@ class InstituicaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     extra_context = {'titulo' : "Excluir Instituição", "botao" : "Confirmar Exclusão"}
     success_message = "Instituição excluída com sucesso!"
     
-    def get_queryset(self):
-        # Only allow deleting of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
-
-    def form_valid(self, form):
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
+    def get_object(self):
+        # Only allow editing of records owned by the current user
+        return Instituicao.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
 
 class StatusDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     template_name = 'paginasweb/form.html'
@@ -189,14 +173,11 @@ class StatusDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('statusList')
     extra_context = {'titulo' : "Excluir Status", "botao" : "Confirmar Exclusão"}
     success_message = "Status excluído com sucesso!"
-    
-    # If Status also has a 'usuario' field, add get_queryset here too:
-    # def get_queryset(self):
-    #     return super().get_queryset().filter(usuario=self.request.user)
 
-    def form_valid(self, form):
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
+    def get_object(self):
+        # Only allow editing of records owned by the current user
+        return Status.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
+    
 
 class DoacaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     template_name = 'paginasweb/form.html'
@@ -204,14 +185,10 @@ class DoacaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('doacaoList')
     extra_context = {'titulo' : "Excluir Doação", "botao" : "Confirmar Exclusão"}
     success_message = "Doação excluída com sucesso!"
-
-    def get_queryset(self):
-        # Only allow deleting of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
-
-    def form_valid(self, form):
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
+    
+    def get_object(self):
+        # Only allow editing of records owned by the current user
+        return Doacao.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
 
 class Historia_InspiradorasDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Historia_Inspiradoras
@@ -220,23 +197,19 @@ class Historia_InspiradorasDelete(SuccessMessageMixin, LoginRequiredMixin, Delet
     extra_context = {'titulo' : "Excluir História Inspiradora", "botao" : "Confirmar Exclusão"}
     success_message = "História Inspiradora excluída com sucesso!"
     
-    def get_queryset(self):
-        # Only allow deleting of records owned by the current user
-        return super().get_queryset().filter(usuario=self.request.user)
-
-    def form_valid(self, form):
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
+    def get_object(self):
+        # Only allow editing of records owned by the current user
+        return Historia_Inspiradoras.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
 
 # Views para Listagem (List) - Modified to filter by current user
 class DoadorList(LoginRequiredMixin, ListView):
-    template_name = 'paginasweb/doadorList.html' # Corrected template path if it was 'lista/doadorList.html'
-    model = Doador
-    context_object_name = 'doadores'
-
-    def get_queryset(self):
-        # Only list records owned by the current user
-        return self.model.objects.filter(usuario=self.request.user)
+        template_name = 'paginasweb/doadorList.html'
+        model = Doador
+        context_object_name = 'doadores'
+        
+        def get_queryset(self):
+            # Lista apenas registros do usuário atual
+            return Doador.objects.filter(usuario=self.request.user)
 
 class InstituicaoList(LoginRequiredMixin, ListView):
     template_name = 'paginasweb/instituicaoList.html' # Corrected template path
@@ -245,7 +218,7 @@ class InstituicaoList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Only list records owned by the current user
-        return self.model.objects.filter(usuario=self.request.user)
+        return Instituicao.objects.filter(usuario=self.request.user)
 
 class DoacaoList(LoginRequiredMixin, ListView):
     template_name = 'paginasweb/doacaoList.html' # Corrected template path
@@ -254,7 +227,7 @@ class DoacaoList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Only list records owned by the current user
-        return self.model.objects.filter(usuario=self.request.user)
+        return Doacao.objects.filter(usuario=self.request.user)
 
 class Historia_InspiradorasList(LoginRequiredMixin, ListView):
     template_name = 'paginasweb/historias_inspiradorasList.html' # Corrected template path
@@ -263,7 +236,7 @@ class Historia_InspiradorasList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Only list records owned by the current user
-        return self.model.objects.filter(usuario=self.request.user)
+        return Historia_Inspiradoras.objects.filter(usuario=self.request.user)
 
 class StatusList(LoginRequiredMixin, ListView):
     template_name = 'paginasweb/statusList.html' # Corrected template path
