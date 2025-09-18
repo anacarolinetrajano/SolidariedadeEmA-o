@@ -1,4 +1,5 @@
-{# FileName: MultipleFiles/index.html #}
+FileName: MultipleFiles/index.html
+FileContents: {# FileName: MultipleFiles/index.html #}
 {% load static %}
 
 
@@ -10,22 +11,21 @@
     <title>Solly - Conectando doadores a instituições</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="{% static 'css/estilo.css' %}" rel="stylesheet">
-</head>
-<body class="bg-gray-50">
+    </head>
+    <body class="bg-gray-50">
     <!-- Header -->
     <header class="gradient-bg text-white sticky top-0 z-50 shadow-lg">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <div class="text-2xl font-bold flex items-center">
-                    <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
-                    </svg>
-                    Doação Solidária
-                </div>
+             <div class="text-2xl font-bold flex items-center">
+            <img src="{% static 'img/Solly.png' %}" alt="Solly Logo" class="w-16 h-16 mr-2" />
+                Solly
+    </div>
                 <div class="hidden md:flex space-x-6">
                     <a href="#inicio" class="hover:text-gray-200 transition-colors">Início</a>
                     <a href="#como-funciona" class="hover:text-gray-200 transition-colors">Como Funciona</a>
                     <a href="#instituicoes" class="hover:text-gray-200 transition-colors">Instituições</a>
+                    <a href="#historias-inspiradoras" class="hover:text-gray-200 transition-colors">Histórias</a> {# ADDED: Link to new stories section #}
                     
                     {# --- START MODIFICATION --- #}
                     {# Links que devem estar sempre visíveis #}
@@ -34,7 +34,7 @@
                     
                     {% if user.is_authenticated %}
                         <a href="{% url 'cadastrar-doacao' %}" class="hover:text-gray-200 transition-colors">Fazer Doação</a>
-                        <a href="{% url 'minhas-doacoes' %}" class="hover:text-gray-200 transition-colors">Minhas Doações</a>
+                        <a href="{% url 'doacaoList' %}" class="hover:text-gray-200 transition-colors">Minhas Doações</a>
                         <a href="{% url 'doadorList' %}" class="hover:text-gray-200 transition-colors">Meus Doadores</a>
                         <a href="{% url 'instituicaoList' %}" class="hover:text-gray-200 transition-colors">Minhas Instituições</a>
                         <a href="{% url 'historias-inspiradorasList' %}" class="hover:text-gray-200 transition-colors">Minhas Histórias</a>
@@ -42,7 +42,6 @@
                         <a href="{% url 'sair' %}" class="hover:text-gray-200 transition-colors">Sair ({{ user.username }})</a>
                     {% else %}
                         <a href="{% url 'login' %}" class="hover:text-gray-200 transition-colors">Login</a>
-                        <a href="{% url 'registrar' %}" class="hover:text-gray-200 transition-colors">Registrar</a>
                     {% endif %}
                     {# --- END MODIFICATION --- #}
 
@@ -78,30 +77,64 @@
         </div>
     </section>
 
-  </div>
-  <div class="story-card">
-      <div class="story-header">
-          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0e363574-18c7-4f82-ab72-e8c4acbebba7.png" alt="João Santos - Beneficiário de programa de alimentação comunitária" class="story-avatar" />
-          <div>
-              <h4>João Santos</h4>
-              <p>Beneficiário</p>
-          </div>
-      </div>
-      <p>"Graças à solidariedade de pessoas que nunca conheci, consegui terminar meus estudos e hoje posso retribuir ajudando outros jovens."</p>
-  </div>
-  <div class="story-card">
-      <div class="story-header">
-          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bf9e2586-09ae-4e41-bb93-5b5e54a0716c.png" alt="Ana Costa - Organizadora de campanhas de arrecadação comunitária" class="story-avatar" />
-          <div>
-              <h4>Ana Costa</h4>
-              <p>Organizadora</p>
-          </div>
-      </div>
-      <p>"Mobilizamos toda a comunidade para arrecadar mais de 2 toneladas de alimentos. A união faz a força e transforma realidades."</p>
-  </div>
-</div>
-</div>
-</section>
+    {# ADDED: New section for Inspirational Stories #}
+    <section id="historias-inspiradoras" class="stories">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">Histórias Inspiradoras</h2>
+            <div class="story-cards">
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0e363574-18c7-4f82-ab72-e8c4acbebba7.png" alt="João Santos - Beneficiário de programa de alimentação comunitária" class="story-avatar" />
+                        <div>
+                            <h4>João Santos</h4>
+                            <p>Beneficiário</p>
+                        </div>
+                    </div>
+                    <p>"Graças à solidariedade de pessoas que nunca conheci, consegui terminar meus estudos e hoje posso retribuir ajudando outros jovens."</p>
+                </div>
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bf9e2586-09ae-4e41-bb93-5b5e54a0716c.png" alt="Ana Costa - Organizadora de campanhas de arrecadação comunitária" class="story-avatar" />
+                        <div>
+                            <h4>Ana Costa</h4>
+                            <p>Organizadora</p>
+                        </div>
+                    </div>
+                    <p>"Mobilizamos toda a comunidade para arrecadar mais de 2 toneladas de alimentos. A união faz a força e transforma realidades."</p>
+                </div>
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="{% static 'img/crianças.jpg' %}" alt="Maria Silva - Voluntária" class="story-avatar" />
+                        <div>
+                            <h4>Maria Silva</h4>
+                            <p>Voluntária</p>
+                        </div>
+                    </div>
+                    <p>"Ver o sorriso no rosto das crianças que ajudamos é a maior recompensa. Cada doação faz uma diferença real em suas vidas."</p>
+                </div>
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="{% static 'img/idoso.jpg' %}" alt="Carlos Oliveira - Doador Regular" class="story-avatar" />
+                        <div>
+                            <h4>Carlos Oliveira</h4>
+                            <p>Doador Regular</p>
+                        </div>
+                    </div>
+                    <p>"Doar se tornou um hábito. É gratificante saber que minha contribuição mensal ajuda a manter projetos importantes para a comunidade."</p>
+                </div>
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="{% static 'img/animais.jpg' %}" alt="Sofia Mendes - Resgatadora de Animais" class="story-avatar" />
+                        <div>
+                            <h4>Sofia Mendes</h4>
+                            <p>Resgatadora de Animais</p>
+                        </div>
+                    </div>
+                    <p>"Com o apoio da Solly, conseguimos mais ração e medicamentos para os animais resgatados. Eles merecem uma segunda chance!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Institutions -->
     <section id="instituicoes" class="py-20 bg-gray-50">
@@ -113,11 +146,35 @@
         </div>
     </section>
 
-    {# --- START MODIFICATION: REMOVED DONATION SECTION FROM INDEX --- #}
-    {# The donation form will now be on the 'cadastrar-doacao' page, which requires login #}
-    {# <section id="doar" class="py-20 bg-white"> ... </section> #}
-    {# --- END MODIFICATION --- #}
-
+    {# ADDED: New section for Doador Registration #}
+    <section id="cadastrar-doador-section" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Cadastre-se como Doador</h2>
+            <div class="max-w-2xl mx-auto bg-gray-50 rounded-xl shadow-lg p-8">
+                <form id="doador-form">
+                    <div class="mb-6">
+                        <label for="doador-nome" class="block text-gray-700 mb-2">Nome Completo</label>
+                        <input type="text" id="doador-nome" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="doador-telefone" class="block text-gray-700 mb-2">Telefone</label>
+                        <input type="tel" id="doador-telefone" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="(XX) XXXXX-XXXX" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="doador-cidade" class="block text-gray-700 mb-2">Cidade</label>
+                        <input type="text" id="doador-cidade" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Sua cidade" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="doador-email" class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" id="doador-email" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="seu.email@exemplo.com" required>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                        Cadastrar Doador
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <!-- Register Institution -->
     {# Esta seção pode ser removida se você preferir usar apenas o link no cabeçalho #}
@@ -173,7 +230,7 @@
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Doação Solidária</h3>
+                    <h3 class="text-xl font-bold mb-4">Solly {# MODIFIED: Changed logo name to Solly #}</h3>
                     <p class="text-gray-400">Conectando pessoas que querem ajudar com instituições que precisam de apoio.</p>
                 </div>
                 <div>
@@ -182,28 +239,7 @@
                         <li><a href="#inicio" class="text-gray-400 hover:text-white">Início</a></li>
                         <li><a href="#como-funciona" class="text-gray-400 hover:text-white">Como Funciona</a></li>
                         <li><a href="#instituicoes" class="text-gray-400 hover:text-white">Instituições</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Ações</h4>
-                    <ul class="space-y-2">
-                        {# --- START MODIFICATION --- #}
-                        {# Links que devem estar sempre visíveis #}
-                        <li><a href="{% url 'cadastrar-doador' %}" class="text-gray-400 hover:text-white">Cadastrar Doador</a></li>
-                        <li><a href="{% url 'cadastrar-instituicao' %}" class="text-gray-400 hover:text-white">Cadastrar Instituição</a></li>
-                        
-                        {% if user.is_authenticated %}
-                            <li><a href="{% url 'cadastrar-doacao' %}" class="text-gray-400 hover:text-white">Fazer Doação</a></li>
-                            <li><a href="{% url 'minhas-doacoes' %}" class="text-gray-400 hover:text-white">Minhas Doações</a></li>
-                            <li><a href="{% url 'doadorList' %}" class="text-gray-400 hover:text-white">Meus Doadores</a></li>
-                            <li><a href="{% url 'instituicaoList' %}" class="text-gray-400 hover:text-white">Minhas Instituições</a></li>
-                            <li><a href="{% url 'historias-inspiradorasList' %}" class="text-gray-400 hover:text-white">Minhas Histórias</a></li>
-                            <li><a href="{% url 'statusList' %}" class="text-gray-400 hover:text-white">Meus Status</a></li>
-                        {% else %}
-                            <li><a href="{% url 'login' %}" class="text-gray-400 hover:text-white">Login</a></li>
-                            <li><a href="{% url 'registrar' %}" class="text-gray-400 hover:text-white">Registrar</a></li>
-                        {% endif %}
-                        {# --- END MODIFICATION --- #}
+                        <li><a href="#historias-inspiradoras" class="text-gray-400 hover:text-white">Histórias</a></li> {# ADDED: Link to new stories section #}
                     </ul>
                 </div>
                 <div>
@@ -213,7 +249,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2024 Doação Solidária. Todos os direitos reservados.</p>
+                <p>© 2024 Solly. Todos os direitos reservados.</p> {# MODIFIED: Changed copyright name to Solly #}
             </div>
         </div>
     </footer>
@@ -322,7 +358,16 @@
           e.preventDefault();
           
           // Simulate registration
-          alert('Cadastro enviado! Entraremos em contato em breve para validar suas informações.');
+          alert('Cadastro de instituição enviado! Entraremos em contato em breve para validar suas informações.');
+          this.reset();
+      });
+
+      // Handle doador form submission (new)
+      document.getElementById('doador-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Simulate registration
+          alert('Cadastro de doador enviado! Obrigado por se juntar à nossa causa.');
           this.reset();
       });
 
