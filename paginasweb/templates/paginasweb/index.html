@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
     <link href="{% static 'css/estilo.css' %}" rel="stylesheet">
     </head>
     <body class="bg-gray-50">
-    <!-- Header -->
+    
     <header class="gradient-bg text-white sticky top-0 z-50 shadow-lg">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
@@ -25,8 +25,6 @@
                     <a href="#instituicoes" class="hover:text-gray-200 transition-colors">Instituições</a>
                     <a href="#historias-inspiradoras" class="hover:text-gray-200 transition-colors">Histórias</a> {# ADDED: Link to new stories section #}
                     
-                    {# --- START MODIFICATION --- #}
-                    {# Links que devem estar sempre visíveis #}
                     <a href="{% url 'cadastrar-doador' %}" class="hover:text-gray-200 transition-colors">Cadastrar Doador</a>
                     <a href="{% url 'cadastrar-instituicao' %}" class="hover:text-gray-200 transition-colors">Cadastrar Instituição</a>
                     
@@ -41,16 +39,14 @@
                     {% else %}
                         <a href="{% url 'login' %}" class="hover:text-gray-200 transition-colors">Login</a>
                     {% endif %}
-                    {# --- END MODIFICATION --- #}
-
-                    {# Removido o link #cadastrar daqui, pois já temos o link direto para cadastrar-instituicao #}
+                  
                     <a href="{% url 'sobre' %}" class="hover:text-gray-200 transition-colors">Sobre</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+
     <section id="inicio" class="gradient-bg text-white py-20">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Faça a Diferença com uma Doação</h1>
@@ -66,8 +62,7 @@
                         Quero Doar (Login Necessário)
                     </a>
                 {% endif %}
-                {# --- END MODIFICATION --- #}
-                {# Este botão "Sou Instituição" pode ser mantido ou alterado para o link direto de cadastro de instituição #}
+               
                 <a href="{% url 'cadastrar-instituicao' %}" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
                     Sou Instituição
                 </a>
@@ -134,12 +129,12 @@
         </div>
     </section>
 
-    <!-- Institutions -->
+    <!-- Institutions 
     <section id="instituicoes" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Instituições Cadastradas</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="institutions-container">
-                <!-- Institutions will be dynamically loaded here -->
+                <!-- Institutions will be dynamically loaded here 
             </div>
         </div>
     </section>
@@ -174,9 +169,8 @@
         </div>
     </section>
 
-    <!-- Register Institution -->
-    {# Esta seção pode ser removida se você preferir usar apenas o link no cabeçalho #}
-    {# Ou pode ser mantida como uma seção de formulário direto na página #}
+    
+    
     <section id="cadastrar" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Cadastre sua Instituição</h2>
@@ -223,7 +217,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-8">
@@ -252,7 +246,7 @@
         </div>
     </footer>
 
-    <!-- Modal (Keep this for success messages, though it's not directly triggered by the index anymore) -->
+   
     <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-xl p-8 max-w-md mx-4 text-center">
             <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -387,5 +381,335 @@
       });
   </script>
 
+</body>
+</html> -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solly - Conectando Solidariedade com Transparência</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f8f9fa; }
+        .navbar { background-color: #007bff; }
+        .hero { background: linear-gradient(to right, #007bff, #28a745); color: white; padding: 100px 0; }
+        .card { border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .footer { background-color: #343a40; color: white; padding: 20px 0; }
+        .impact-counter { font-size: 2rem; font-weight: bold; color: #28a745; }
+    </style>
+</head>
+<body>
+    <!-- Menu Principal Fixo -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">Solly</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#doacoes">Doações</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#instituicoes">Instituições</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#historias">Histórias Inspiradoras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#login">Entrar/Cadastrar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Página Inicial -->
+    <section id="home" class="hero text-center">
+        <div class="container">
+            <h1>Conectando Solidariedade com Transparência</h1>
+            <p class="lead">Seja um doador ou instituição: junte-se a nós para fazer a diferença!</p>
+            <a href="#doacoes" class="btn btn-light btn-lg">Faça uma Doação</a>
+        </div>
+    </section>
+
+    <!-- Painel de Transparência e Impacto -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Transparência e Impacto</h2>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="impact-counter" id="totalDoacoes">1,250</div>
+                    <p>Doações Realizadas</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="impact-counter" id="instituicoesApoiadas">85</div>
+                    <p>Instituições Apoiadas</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="impact-counter" id="pessoasImpactadas">10,000</div>
+                    <p>Pessoas Impactadas</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h5>Histórico Público de Doações</h5>
+                <ul class="list-group" id="historicoPublico">
+                    <li class="list-group-item">João doou R$ 200 para Instituição A (Concluída)</li>
+                    <li class="list-group-item">Maria doou roupas para Instituição B (Em Andamento)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doações -->
+    <section id="doacoes" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Faça uma Doação</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5>Doação Financeira</h5>
+                        <form id="doacaoFinanceira">
+                            <div class="mb-3">
+                                <label for="valor" class="form-label">Valor (R$)</label>
+                                <input type="number" class="form-control" id="valor" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Doar via PIX</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5>Doação de Itens</h5>
+                        <form id="doacaoItens">
+                            <div class="mb-3">
+                                <label for="item" class="form-label">Item (ex: Alimentos, Roupas)</label>
+                                <input type="text" class="form-control" id="item" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="localizacao" class="form-label">Localização para Coleta</label>
+                                <input type="text" class="form-control" id="localizacao" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Agendar Coleta</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h5>Seu Histórico de Doações</h5>
+                <ul class="list-group" id="historicoDoacoes">
+                    <!-- Simulado -->
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instituições -->
+    <section id="instituicoes" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Instituições</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5>Instituição A</h5>
+                        <p>Causa: Alimentação. Necessidade: Alimentos não perecíveis.</p>
+                        <button class="btn btn-outline-primary">Doar</button>
+                    </div>
+                </div>
+                <!-- Adicione mais cards dinamicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Histórias Inspiradoras -->
+    <section id="historias" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Histórias Inspiradoras</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <h5>Destaque: João e a Instituição A</h5>
+                        <p>"Minha doação de alimentos ajudou 50 famílias!"</p>
+                        <img src="https://via.placeholder.com/300x200" class="img-fluid" alt="História">
+                    </div>
+                </div>
+                <!-- Adicione mais -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2>Sobre o Solly</h2>
+            <p>Somos uma ponte entre doadores e instituições, promovendo transparência e solidariedade.</p>
+        </div>
+    </section>
+
+    <!-- Login/Cadastro -->
+    <section id="login" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Entrar ou Cadastrar</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5>Login</h5>
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="emailLogin" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="emailLogin" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="senhaLogin" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="senhaLogin" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Entrar</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5>Cadastrar como Doador</h5>
+                        <form id="cadastroDoador">
+                            <div class="mb-3">
+                                <label for="nomeDoador" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nomeDoador" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="emailDoador" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="emailDoador" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="senhaDoador" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="senhaDoador" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Cadastrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Cadastro Instituição (similar, oculto por padrão) -->
+            <div class="mt-4" id="cadastroInstituicao" style="display: none;">
+                <div class="card p-4">
+                    <h5>Cadastrar como Instituição</h5>
+                    <form id="cadastroInstituicaoForm">
+                        <div class="mb-3">
+                            <label for="nomeInstituicao" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nomeInstituicao" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cnpj" class="form-label">CNPJ</label>
+                            <input type="text" class="form-control" id="cnpj" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+            <button class="btn btn-link" onclick="$('#cadastroInstituicao').toggle()">Cadastrar como Instituição</button>
+        </div>
+    </section>
+
+    <!-- Administrador (Simulado) -->
+    <section id="admin" class="py-5 bg-warning" style="display: none;">
+        <div class="container">
+            <h2>Área do Administrador</h2>
+            <p>Modere cadastros e histórias aqui.</p>
+            <ul id="moderacao">
+                <!-- Simulado -->
+            </ul>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p>&copy; 2023 Solly. Todos os direitos reservados.</p>
+            <p>Contato: contato@solly.com | Redes Sociais: <i class="bi bi-facebook"></i> <i class="bi bi-twitter"></i></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Simulação de perfis e doações com localStorage
+            let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            let doacoes = JSON.parse(localStorage.getItem('doacoes')) || [];
+
+            // Validação e Cadastro Doador
+            $('#cadastroDoador').submit(function(e) {
+                e.preventDefault();
+                let nome = $('#nomeDoador').val();
+                let email = $('#emailDoador').val();
+                let senha = $('#senhaDoador').val();
+                usuarios.push({ tipo: 'doador', nome, email, senha });
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+                alert('Cadastro realizado! Verifique seu e-mail.');
+            });
+
+            // Similar para Instituição
+            $('#cadastroInstituicaoForm').submit(function(e) {
+                e.preventDefault();
+                let nome = $('#nomeInstituicao').val();
+                let cnpj = $('#cnpj').val();
+                usuarios.push({ tipo: 'instituicao', nome, cnpj });
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+                alert('Cadastro enviado para verificação.');
+            });
+
+            // Login Simulado
+            $('#loginForm').submit(function(e) {
+                e.preventDefault();
+                let email = $('#emailLogin').val();
+                let senha = $('#senhaLogin').val();
+                let user = usuarios.find(u => u.email === email && u.senha === senha);
+                if (user) {
+                    alert('Login bem-sucedido!');
+                    if (user.tipo === 'admin') $('#admin').show();
+                } else {
+                    alert('Credenciais inválidas.');
+                }
+            });
+
+            // Doação Financeira
+            $('#doacaoFinanceira').submit(function(e) {
+                e.preventDefault();
+                let valor = $('#valor').val();
+                doacoes.push({ tipo: 'financeira', valor, status: 'pendente' });
+                localStorage.setItem('doacoes', JSON.stringify(doacoes));
+                atualizarHistorico();
+                alert('Doação registrada! Recibo enviado por e-mail.');
+            });
+
+            // Doação de Itens
+            $('#doacaoItens').submit(function(e) {
+                e.preventDefault();
+                let item = $('#item').val();
+                let local = $('#localizacao').val();
+                doacoes.push({ tipo: 'itens', item, local, status: 'pendente' });
+                localStorage.setItem('doacoes', JSON.stringify(doacoes));
+                atualizarHistorico();
+                alert('Coleta agendada!');
+            });
+
+            // Atualizar Histórico
+            function atualizarHistorico() {
+                $('#historicoDoacoes').empty();
+                doacoes.forEach(d => {
+                    $('#historicoDoacoes').append(`<li class="list-group-item">${d.tipo}: ${d.valor || d.item} - Status: ${d.status}</li>`);
+                });
+            }
+            atualizarHistorico();
+
+            // Navegação Suave
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top - 70 }, 500);
+            });
+        });
+    </script>
 </body>
 </html>
