@@ -3,31 +3,41 @@
 {% load static %}
 
 {% block conteudo %}
-<section id="conteudo" class="section-padding bg-white">
-    <div class="container mx-auto px-6">
-        <h2 id="" class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">
-            Descrição do Projeto – Solly
-        </h2>
-
+<section id="conteudo" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="display-5 fw-bold text-center mb-5">Descrição do Projeto – Solly</h2>
         <p>
             O projeto Solly é uma plataforma digital criada com o propósito de promover a solidariedade e
             conectar pessoas dispostas a ajudar com instituições que realmente precisam de apoio.
+        </p>
+        <p>
             Com uma interface simples, intuitiva e acolhedora, o site permite que doadores e instituições sociais se cadastrem
             para participar de ações solidárias, doações de recursos e divulgação de histórias inspiradoras.
+        </p>
+        <p>
             A proposta central do Solly é tornar a solidariedade mais acessível, transparente e eficiente.
             Através da plataforma, qualquer pessoa pode se tornar parte de uma corrente do bem, seja contribuindo com doações,
             seja inspirando outras pessoas com relatos de superação e empatia.
+        </p>
+        <p>
             O projeto também valoriza a visibilidade de boas ações, oferecendo um espaço para que histórias inspiradoras sejam
             compartilhadas e sirvam de motivação para a sociedade como um todo.
+        </p>
+        <p>
             Além disso, as instituições cadastradas podem divulgar suas necessidades, aumentando as chances de receber apoio
             direcionado e relevante. Com cores suaves e linguagem acolhedora, Solly foi pensado para transmitir calma,
             confiança e empatia — valores essenciais para promover a transformação social através de pequenos gestos.
         </p>
 
-        <div style="text-align: center;">
-            <img src="{% static 'img/1000012951.jpg' %}" alt="Diagrama de Classe" width="500">
-            <img src="{% static 'img/Diagrama de caso de uso.png' %}" alt="Diagrama de Caso de Uso" width="500">
+        <div class="text-center mt-4 row justify-content-center">
+            <div class="col-md-6">
+                <img src="{% static 'img/1000012951.jpg' %}" alt="Diagrama de Classe" width="500" class="img-fluid rounded shadow-sm">
+            </div>
+            <div class="col-md-6">
+                <img src="{% static 'img/Diagrama de caso de uso.png' %}" alt="Diagrama de Caso de Uso" width="500" class="img-fluid rounded shadow-sm">
+            </div>
         </div>
+
     </div>
 </section>
 

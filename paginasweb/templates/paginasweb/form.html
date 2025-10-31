@@ -1,26 +1,47 @@
 {% extends "paginasweb/index.html" %}
 
+{% comment %} Load do crispy forms {% endcomment %}
+{% load crispy_forms_tags %}
 
 {% block conteudo %}
-  <h2 class="centralizado">{{ titulo }}</h2>
+<section id="conteudo" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="display-5 fw-bold text-center mb-5">{{titulo}}</h2>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6">
 
-  <form method="post">
+                <form method="post">
 
-    {% csrf_token %}
-    
-    {{ form.as_p }}
+                    {% csrf_token %}
 
-    {% if botao == "Excluir" %}
-    <h4>
-      Deseja excluir o registro:
-      <span style="color: red;">
-        {{object}}
-      </span>
+                    {{ form|crispy }}
 
-      </h4>
-    {% endif %}
+                    {% if botao == "Excluir" %}
+                    <h4 class="text-center mt-4 text-danger">
+                        Deseja excluir o registro:
+                    </h4>
+                    <p class="text-center fw-bold fs-4">
+                        "{{ objeto }}"
+                    </p>
+                    {% endif %}
 
-    <button type="submit">{{botao}}</button>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i>
+                            {{botao}}
+                        </button>
+                        <a href="" class="btn btn-secondary" onclick="window.history.back(); return false;">
+                            <i class="bi bi-x-circle"></i>
+                            Cancelar
+                        </a>
+                    </div>
 
-  </form>
+                </form>
+            </div>
+            
+        </div>
+
+    </div>
+</section>
 {% endblock %}

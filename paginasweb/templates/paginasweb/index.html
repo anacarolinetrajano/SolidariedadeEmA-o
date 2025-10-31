@@ -194,6 +194,7 @@
         </div>
     </section>
 
+    {% block conteudo %}
     <!-- Como Funciona -->
     <section id="como-funciona" class="py-5 bg-light">
         <div class="container py-5">
@@ -446,6 +447,7 @@
             </div>
         </div>
     </section>
+    {% endblock conteudo %}
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-5">
@@ -504,6 +506,7 @@
                         </div>
                     </form>
                 </div>
+                
             </div>
             
             <hr class="my-4 bg-white opacity-25">
@@ -529,9 +532,15 @@
     <!-- Custom JavaScript -->
     <script>
         $(document).ready(function() {
-           
+            // Exemplo: Ativar tooltips do Bootstrap
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
         });
 
     </script>
+
+    {% block script %}{% endblock script %}
 </body>
 </html>

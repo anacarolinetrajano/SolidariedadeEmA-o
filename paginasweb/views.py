@@ -20,8 +20,7 @@ class CadastroUsuarioView(CreateView):
 
     def form_valid(self, form):
         url = super().form_valid(form)
-        grupo, criado = Group.objects.get_or_create(name='Estudante')
-        self.object.groups.add(grupo)
+        
         return url
 
 # Views para Páginas Estáticas
