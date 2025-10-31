@@ -8,12 +8,14 @@ from .views import (
     Historia_InspiradorasCreate, Historia_InspiradorasUpdate, Historia_InspiradorasDelete, 
     DoadorList, InstituicaoList, DoacaoList, Historia_InspiradorasList, StatusList
 )
-from .views import CadastroUsuarioView
+from .views import CadastroUsuarioView, CadastroDoadorView, CadastroInstituicaoView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # Rota para o cadastro de usuário
+    # Rotas para cadastro de usuários
     path("registrar/", CadastroUsuarioView.as_view(), name="registrar"),
+    path("registrar/doador/", CadastroDoadorView.as_view(), name="registrar-doador"),
+    path("registrar/instituicao/", CadastroInstituicaoView.as_view(), name="registrar-instituicao"),
     
     path("login/", auth_views.LoginView.as_view(
          template_name = 'paginasweb/form.html', 

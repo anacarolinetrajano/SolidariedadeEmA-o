@@ -165,9 +165,19 @@
                     <a href="{% url "login" %}" class="btn btn-light">
                         <i class="bi bi-box-arrow-in-right me-1"></i>Entrar
                     </a>
-                    <a href="{% url "registrar" %}" class="btn btn-outline-light">
-                        <i class="bi bi-person-plus me-1"></i>Registrar
-                    </a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-plus me-1"></i>Registrar
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url "registrar-doador" %}">
+                                <i class="bi bi-heart me-2"></i>Como Doador
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url "registrar-instituicao" %}">
+                                <i class="bi bi-building me-2"></i>Como Instituição
+                            </a></li>
+                        </ul>
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -182,11 +192,11 @@
                     <h1 class="display-6 fw-bold mb-4">Conectamos doadores a instituições que realmente precisam de ajuda</h1>
                     <p class="lead mb-4">Transforme vidas e comunidades através da solidariedade</p>
                     <div class="d-flex flex-wrap gap-3 align-items-center justify-content-center">
-                        <a href="#" class="btn btn-light btn-lg px-4">
-                            <i class="bi bi-person-plus-fill me-2"></i>Cadastrar-se
+                        <a href="{% url 'registrar-doador' %}" class="btn btn-light btn-lg px-4">
+                            <i class="bi bi-heart-fill me-2"></i>Cadastrar como Doador
                         </a>
-                        <a href="#" class="btn btn-outline-light btn-lg px-4">
-                            <i class="bi bi-search me-2"></i>Buscar Instituições
+                        <a href="{% url 'registrar-instituicao' %}" class="btn btn-outline-light btn-lg px-4">
+                            <i class="bi bi-building me-2"></i>Cadastrar Instituição
                         </a>
                     </div>
                 </div>
@@ -506,7 +516,7 @@
                         </div>
                     </form>
                 </div>
-                
+
             </div>
             
             <hr class="my-4 bg-white opacity-25">

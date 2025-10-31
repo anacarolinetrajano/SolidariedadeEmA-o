@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, Group
 
 from .models import Doador, Instituicao, Status, Doacao, Historia_Inspiradoras
-from .forms import UsuarioCadastroForm
+from .forms import UsuarioCadastroForm, DoadorCadastroForm, InstituicaoCadastroForm
 
 
 class CadastroUsuarioView(CreateView):
@@ -16,12 +16,47 @@ class CadastroUsuarioView(CreateView):
     form_class = UsuarioCadastroForm
     template_name = 'paginasweb/form.html'
     success_url = reverse_lazy('login')
-    extra_context = {'titulo' : "Cadastrar Doador", "botao" : "Cadastrar"}
+    extra_context = {'titulo' : "Cadastrar Usuário", "botao" : "Cadastrar"}
 
     def form_valid(self, form):
         url = super().form_valid(form)
-        
         return url
+
+
+# View para cadastro de Doador
+# Cria o usuário e o doador simultaneamente
+class CadastroDoadorView(CreateView):
+    model = User
+    form_class = DoadorCadastroForm
+    template_name = 'paginasweb/form.html'
+    success_url = reverse_lazy('login')
+    extra_context = {
+        'titulo': "Cadastrar-se como Doador",
+        'botao': "Criar Conta de Doador",
+        'subtitulo': "Faça parte da nossa comunidade de doadores"
+    }
+
+    def form_valid(self, form):
+        messages.success(self.request, "Cadastro de doador realizado com sucesso! Faça login para continuar.")
+        return super().form_valid(form)
+
+
+# View para cadastro de Instituição
+# Cria o usuário e a instituição simultaneamente
+class CadastroInstituicaoView(CreateView):
+    model = User
+    form_class = InstituicaoCadastroForm
+    template_name = 'paginasweb/form.html'
+    success_url = reverse_lazy('login')
+    extra_context = {
+        'titulo': "Cadastrar Instituição",
+        'botao': "Criar Conta de Instituição",
+        'subtitulo': "Conecte sua instituição com doadores solidários"
+    }
+
+    def form_valid(self, form):
+        messages.success(self.request, "Cadastro de instituição realizado com sucesso! Faça login para continuar.")
+        return super().form_valid(form)
 
 # Views para Páginas Estáticas
 class PaginaInicial(TemplateView):

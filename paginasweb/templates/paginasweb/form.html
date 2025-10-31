@@ -45,3 +45,13 @@
     </div>
 </section>
 {% endblock %}
+
+{% block script %}
+<script>
+    // doc .ready
+    $(document).ready(function() {
+        // Foco no primeiro campo do formulário
+        $('form :input:visible:enabled:first').focus();
+    });
+</script>
+{% endblock script %}
