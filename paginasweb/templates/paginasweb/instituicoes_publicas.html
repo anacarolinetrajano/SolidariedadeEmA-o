@@ -1,0 +1,166 @@
+{% extends "paginasweb/index.html" %}
+{% load static %}
+
+{% block conteudo %}
+<div class="container py-5 mt-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">
+            <i class="bi bi-building text-success me-3"></i>
+            Nossas Instituições
+        </h1>
+        <p class="lead text-muted">Conheça as organizações parceiras que transformam doações em ações concretas</p>
+    </div>
+
+    {% if instituicao_list %}
+    <!-- Grade de Instituições -->
+    <div class="row g-4 mb-4">
+        {% for instituicao in instituicao_list %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card institution-card border-0 shadow h-100">
+                <div class="card-body p-4">
+                    <!-- Cabeçalho da Instituição -->
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="flex-grow-1">
+                            <h5 class="card-title fw-bold text-success mb-2">{{ instituicao.nome }}</h5>
+                            <span class="badge bg-success bg-opacity-10 text-success">
+                                <i class="bi bi-tag me-1"></i>{{ instituicao.tipo }}
+                            </span>
+                        </div>
+                        <i class="bi bi-building fs-3 text-success opacity-25"></i>
+                    </div>
+                    
+                    <!-- Descrição -->
+                    <p class="text-muted mb-3" style="min-height: 60px;">
+                        {{ instituicao.descricao|truncatewords:15 }}
+                    </p>
+                    
+                    <!-- Informações de Contato -->
+                    <hr>
+                    <div class="d-flex flex-column gap-2">
+                        <small class="text-muted">
+                            <i class="bi bi-geo-alt-fill text-success me-2"></i>
+                            <strong>Cidade:</strong> {{ instituicao.cidade }}
+                        </small>
+                        <small class="text-muted">
+                            <i class="bi bi-telephone-fill text-success me-2"></i>
+                            <strong>Telefone:</strong> {{ instituicao.telefone }}
+                        </small>
+                    </div>
+                    
+                    <!-- Botões de Ação (Admin) -->
+                    {% if user.is_superuser %}
+                    <hr>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'editar-instituicao' instituicao.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                            <i class="bi bi-pencil me-1"></i>Editar
+                        </a>
+                        <a href="{% url 'deletar-instituicao' instituicao.pk %}" class="btn btn-sm btn-outline-danger flex-grow-1">
+                            <i class="bi bi-trash me-1"></i>Excluir
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Paginação -->
+    {% if is_paginated %}
+    <nav aria-label="Navegação de páginas">
+        <ul class="pagination justify-content-center">
+            <!-- Primeira Página -->
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Primeira">
+                    <i class="bi bi-chevron-double-left"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                    <i class="bi bi-chevron-left"></i>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-double-left"></i></span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-left"></i></span>
+            </li>
+            {% endif %}
+
+            <!-- Páginas Numeradas -->
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Última Página -->
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                    <i class="bi bi-chevron-double-right"></i>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-right"></i></span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-double-right"></i></span>
+            </li>
+            {% endif %}
+        </ul>
+        
+        <!-- Informação de Páginas -->
+        <p class="text-center text-muted mt-3">
+            Mostrando instituições {{ page_obj.start_index }} a {{ page_obj.end_index }} de {{ page_obj.paginator.count }} no total
+        </p>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <!-- Estado Vazio -->
+    <div class="alert alert-info text-center py-5">
+        <i class="bi bi-building fs-1 d-block mb-3"></i>
+        <h4 class="fw-bold mb-3">Nenhuma instituição cadastrada ainda</h4>
+        <p class="mb-0">Volte em breve para conhecer as instituições parceiras!</p>
+    </div>
+    {% endif %}
+
+    <!-- Seção de Chamada para Ação -->
+    {% if not user.is_authenticated %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow gradient-bg text-white">
+                <div class="card-body p-5 text-center">
+                    <i class="bi bi-heart-fill fs-1 mb-3"></i>
+                    <h3 class="fw-bold mb-3">Quer Participar?</h3>
+                    <p class="mb-4">Cadastre-se para apoiar essas instituições através de doações</p>
+                    <a href="{% url 'registrar-doador' %}" class="btn btn-light btn-lg me-2">
+                        <i class="bi bi-person-plus me-2"></i>Cadastrar como Doador
+                    </a>
+                    <a href="{% url 'registrar-instituicao' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-building me-2"></i>Cadastrar Instituição
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

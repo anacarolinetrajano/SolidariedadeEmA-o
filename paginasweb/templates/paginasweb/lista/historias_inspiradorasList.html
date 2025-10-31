@@ -3,25 +3,92 @@
 {% load static %}
 
 {% block conteudo %}
+<!-- Lista de Histórias Inspiradoras -->
+<section id="conteudo" class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="display-5 fw-bold">
+                <i class="bi bi-book-half me-2"></i>Minhas Histórias Inspiradoras
+            </h2>
+            <a href="{% url 'cadastrar-historia-inspiradora' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Compartilhar História
+            </a>
+        </div>
 
-<h2>Lista de Histórias Inspiradoras</h2>
-
-
-{% for historia in object_list %}
-<!-- Exibir as histórias em forma de blog -->
-<div class="blog-post">
-    <h3>{{ historia.titulo }}</h3>
-    <p>{{ historia.conteudo }}</p>
-    <p><strong>Data de Postagem:</strong> {{ historia.data_postagem }}</p>
-    <p><strong>Autor:</strong> {{ historia.autor }}</p>
-    <p><strong>Doador:</strong> {{ historia.doador }}</p>
-    <p><strong>Instituição:</strong> {{ historia.instituicao }}</p>
-    <a href="{% url "editar-historia-inspiradora" historia.pk %}">Editar</a>
-    <a href="{% url "deletar-historia-inspiradora" historia.pk %}">Deletar</a>
-</div>
-{% empty %}
-<p>Nenhuma história inspiradora encontrada.</p>
-{% endfor %}
-
-
+        {% if historias %}
+        <div class="row g-4">
+            {% for historia in historias %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm story-card">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-success">
+                            <i class="bi bi-chat-quote me-2"></i>{{ historia.titulo }}
+                        </h5>
+                        <p class="card-text text-muted" style="max-height: 100px; overflow: hidden;">
+                            {{ historia.conteudo|truncatewords:30 }}
+                        </p>
+                        
+                        <hr>
+                        
+                        <div class="mb-2">
+                            <small class="text-muted">
+                                <i class="bi bi-person-circle me-1"></i>
+                                <strong>Autor:</strong> {{ historia.autor }}
+                            </small>
+                        </div>
+                        
+                        <div class="mb-2">
+                            <small class="text-muted">
+                                <i class="bi bi-calendar-event me-1"></i>
+                                <strong>Publicado em:</strong> {{ historia.data_postagem|date:"d/m/Y" }}
+                            </small>
+                        </div>
+                        
+                        {% if historia.doador %}
+                        <div class="mb-2">
+                            <small class="text-muted">
+                                <i class="bi bi-heart me-1"></i>
+                                <strong>Doador:</strong> {{ historia.doador.nome }}
+                            </small>
+                        </div>
+                        {% endif %}
+                        
+                        {% if historia.instituicao %}
+                        <div class="mb-2">
+                            <small class="text-muted">
+                                <i class="bi bi-building me-1"></i>
+                                <strong>Instituição:</strong> {{ historia.instituicao.nome }}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'editar-historia-inspiradora' historia.pk %}" 
+                               class="btn btn-sm btn-outline-primary flex-grow-1">
+                                <i class="bi bi-pencil-square me-1"></i>Editar
+                            </a>
+                            <a href="{% url 'deletar-historia-inspiradora' historia.pk %}" 
+                               class="btn btn-sm btn-outline-danger flex-grow-1">
+                                <i class="bi bi-trash me-1"></i>Excluir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+            <h5>Nenhuma história compartilhada</h5>
+            <p class="mb-3">Você ainda não compartilhou nenhuma história inspiradora.</p>
+            <a href="{% url 'cadastrar-historia-inspiradora' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Compartilhar Primeira História
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

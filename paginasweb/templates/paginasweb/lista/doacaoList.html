@@ -3,37 +3,86 @@
 {% load static %}
 
 {% block conteudo %}
+<!-- Lista de Doações -->
+<section id="conteudo" class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="display-5 fw-bold">
+                <i class="bi bi-gift me-2"></i>Minhas Doações
+            </h2>
+            <a href="{% url 'cadastrar-doacao' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Registrar Doação
+            </a>
+        </div>
 
-<h2>Lista de Doações</h2>
-
-<table>
-<tr>
-    <th>Tipo</th>
-    <th>Quantidade</th>
-    <th>Data</th>
-    <th>Doador</th>
-    <th>Instituição</th>
-    <th>Administrar</th>
-</tr>
-
-{% for doacao in object_list %}
-<tr>
-    <td>{{ doacao.tipo }}</td>
-    <td>{{ doacao.quantidade }}</td>
-    <td>{{ doacao.data }}</td>
-    <td>{{ doacao.doador.nome }}</td>
-    <td>{{ doacao.instituicao.nome }}</td>
-    <td>
-        <a href="{% url "editar-doacao" doacao.pk %}">Editar</a> 
-        <a href="{% url "deletar-doacao" doacao.pk %}">Deletar</a>
-    </td>
-</tr>
-{% empty %}
-<tr>
-    <td colspan="6">Nenhuma doação encontrada.</td>
-</tr>
-{% endfor %}
-
-</table>
-
+        {% if doacoes %}
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-success">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col"><i class="bi bi-tag me-1"></i>Tipo</th>
+                                <th scope="col"><i class="bi bi-cash me-1"></i>Quantidade</th>
+                                <th scope="col"><i class="bi bi-calendar me-1"></i>Data</th>
+                                <th scope="col"><i class="bi bi-person me-1"></i>Doador</th>
+                                <th scope="col"><i class="bi bi-building me-1"></i>Instituição</th>
+                                <th scope="col"><i class="bi bi-check-circle me-1"></i>Status</th>
+                                <th scope="col" class="text-center"><i class="bi bi-gear me-1"></i>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doacao in doacoes %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>
+                                    {% if doacao.tipo == "1" %}
+                                        <span class="badge bg-success"><i class="bi bi-cash-coin me-1"></i>Dinheiro</span>
+                                    {% elif doacao.tipo == "2" %}
+                                        <span class="badge bg-info"><i class="bi bi-bag me-1"></i>Roupa</span>
+                                    {% elif doacao.tipo == "3" %}
+                                        <span class="badge bg-warning"><i class="bi bi-basket me-1"></i>Alimento</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ doacao.get_tipo_display }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="fw-semibold">{{ doacao.quantidade }}</td>
+                                <td>{{ doacao.data|date:"d/m/Y H:i" }}</td>
+                                <td>{{ doacao.doador.nome }}</td>
+                                <td>{{ doacao.instituicao.nome }}</td>
+                                <td><span class="badge bg-primary">{{ doacao.status.nome }}</span></td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{% url 'editar-doacao' doacao.pk %}" 
+                                           class="btn btn-outline-primary" 
+                                           title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="{% url 'deletar-doacao' doacao.pk %}" 
+                                           class="btn btn-outline-danger" 
+                                           title="Excluir">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+            <h5>Nenhuma doação registrada</h5>
+            <p class="mb-3">Você ainda não registrou nenhuma doação.</p>
+            <a href="{% url 'cadastrar-doacao' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Registrar Primeira Doação
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

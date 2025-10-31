@@ -1,0 +1,201 @@
+{% extends "paginasweb/index.html" %}
+{% load static %}
+
+{% block conteudo %}
+<div class="container py-5 mt-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">
+            <i class="bi bi-chat-heart text-success me-3"></i>
+            Histórias Inspiradoras
+        </h1>
+        <p class="lead text-muted">Conheça histórias de transformação através da solidariedade</p>
+    </div>
+
+    {% if historias %}
+    <!-- Grade de Histórias -->
+    <div class="row g-4 mb-4">
+        {% for historia in historias %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card story-card border-0 shadow h-100">
+                <div class="card-body p-4 d-flex flex-column">
+                    <!-- Cabeçalho da História -->
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                            <i class="bi bi-chat-quote-fill fs-4 text-success"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 fw-bold">{{ historia.autor }}</h6>
+                            <small class="text-muted">{{ historia.data_postagem|date:"d/m/Y H:i" }}</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Título da História -->
+                    <h5 class="fw-bold text-success mb-3">{{ historia.titulo }}</h5>
+                    
+                    <!-- Conteúdo -->
+                    <p class="text-muted flex-grow-1" style="min-height: 100px;">
+                        {{ historia.conteudo|truncatewords:30 }}
+                    </p>
+                    
+                    <!-- Relacionamentos -->
+                    {% if historia.doador or historia.instituicao %}
+                    <div class="border-top pt-3 mt-auto">
+                        {% if historia.doador %}
+                        <div class="mb-2">
+                            <small class="text-muted d-block">
+                                <i class="bi bi-heart-fill text-danger me-2"></i>
+                                <strong>Doador:</strong> {{ historia.doador.nome }}
+                            </small>
+                        </div>
+                        {% endif %}
+                        {% if historia.instituicao %}
+                        <div>
+                            <small class="text-muted d-block">
+                                <i class="bi bi-building text-primary me-2"></i>
+                                <strong>Instituição:</strong> {{ historia.instituicao.nome }}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Botões de Ação (Admin) -->
+                    {% if user.is_superuser %}
+                    <div class="border-top pt-3 mt-3">
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'editar-historia-inspiradora' historia.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                                <i class="bi bi-pencil me-1"></i>Editar
+                            </a>
+                            <a href="{% url 'deletar-historia-inspiradora' historia.pk %}" class="btn btn-sm btn-outline-danger flex-grow-1">
+                                <i class="bi bi-trash me-1"></i>Excluir
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <!-- CTA Card -->
+        {% if user.is_authenticated %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow h-100 gradient-bg text-white">
+                <div class="card-body p-4 d-flex flex-column justify-content-center text-center">
+                    <i class="bi bi-chat-quote-fill fs-1 mb-3"></i>
+                    <h5 class="fw-bold mb-3">Compartilhe Sua História</h5>
+                    <p class="mb-4">Inspire outras pessoas com sua experiência de solidariedade</p>
+                    <a href="{% url 'cadastrar-historia-inspiradora' %}" class="btn btn-light">
+                        <i class="bi bi-plus-circle me-2"></i>Compartilhar História
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Paginação -->
+    {% if is_paginated %}
+    <nav aria-label="Navegação de páginas">
+        <ul class="pagination justify-content-center">
+            <!-- Primeira Página -->
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Primeira">
+                    <i class="bi bi-chevron-double-left"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                    <i class="bi bi-chevron-left"></i>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-double-left"></i></span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-left"></i></span>
+            </li>
+            {% endif %}
+
+            <!-- Páginas Numeradas -->
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Última Página -->
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                    <i class="bi bi-chevron-double-right"></i>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-right"></i></span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link"><i class="bi bi-chevron-double-right"></i></span>
+            </li>
+            {% endif %}
+        </ul>
+        
+        <!-- Informação de Páginas -->
+        <p class="text-center text-muted mt-3">
+            Mostrando histórias {{ page_obj.start_index }} a {{ page_obj.end_index }} de {{ page_obj.paginator.count }} no total
+        </p>
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <!-- Estado Vazio -->
+    <div class="alert alert-info text-center py-5">
+        <i class="bi bi-chat-quote fs-1 d-block mb-3"></i>
+        <h4 class="fw-bold mb-3">Ainda não há histórias compartilhadas</h4>
+        <p class="mb-0">Seja o primeiro a inspirar outras pessoas compartilhando sua história!</p>
+        {% if user.is_authenticated %}
+        <hr>
+        <a href="{% url 'cadastrar-historia-inspiradora' %}" class="btn btn-success mt-3">
+            <i class="bi bi-plus-circle me-2"></i>Compartilhar Primeira História
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Seção de Chamada para Ação -->
+    {% if not user.is_authenticated %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow gradient-bg text-white">
+                <div class="card-body p-5 text-center">
+                    <i class="bi bi-heart-fill fs-1 mb-3"></i>
+                    <h3 class="fw-bold mb-3">Faça Parte Dessa História</h3>
+                    <p class="mb-4">Cadastre-se para compartilhar sua experiência ou apoiar através de doações</p>
+                    <a href="{% url 'registrar-doador' %}" class="btn btn-light btn-lg me-2">
+                        <i class="bi bi-person-plus me-2"></i>Cadastrar como Doador
+                    </a>
+                    <a href="{% url 'registrar-instituicao' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-building me-2"></i>Cadastrar Instituição
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

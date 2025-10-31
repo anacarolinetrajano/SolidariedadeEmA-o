@@ -17,12 +17,12 @@
 
                     {{ form|crispy }}
 
-                    {% if botao == "Excluir" %}
-                    <h4 class="text-center mt-4 text-danger">
+                    {% if botao == "Confirmar Exclusão" %}
+                    <h4 class="text-center mt-1 text-danger">
                         Deseja excluir o registro:
                     </h4>
-                    <p class="text-center fw-bold fs-4">
-                        "{{ objeto }}"
+                    <p class="text-center fw-bold fs-3 text-secondary">
+                        "{{ object }}"
                     </p>
                     {% endif %}
 

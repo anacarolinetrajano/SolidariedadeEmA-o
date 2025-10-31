@@ -13,82 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
     <!-- Custom CSS (mínimo necessário) -->
-    <style>
-        :root {
-            --primary-color: #10b981;
-            --secondary-color: #3b82f6;
-            --accent-color: #f59e0b;
-            --dark-color: #1f2937;
-            --light-color: #f9fafb;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        }
-
-        .navbar {
-            backdrop-filter: blur(10px);
-            background: rgba(16, 185, 129, 0.95) !important;
-        }
-
-        .nav-item {
-            font-weight: 500;
-        }
-
-        .nav-link {
-            color: white !important;
-            font-size: 18px;
-        }
-
-        .nav-link:hover {
-            color: #C9fafb !important;
-        }
-
-        .institution-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .institution-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .filter-btn.active {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            transition: all 0.3s ease;
-        }
-
-        .social-icon:hover {
-            transform: scale(1.1);
-            filter: brightness(1.1);
-        }
-
-        .story-card {
-            transition: transform 0.3s ease;
-        }
-
-        .story-card:hover {
-            transform: translateY(-4px);
-        }
-    </style>
+    <link href="{% static 'css/estilo.css' %}" rel="stylesheet">
 </head>
 <body>
 
@@ -112,39 +37,77 @@
                         <a class="nav-link" href="{% url "index" %}#como-funciona"><i class="bi bi-info-circle-fill me-1"></i>Como Funciona</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url "index" %}#instituicoes"><i class="bi bi-building me-1"></i>Instituições</a>
+                        <a class="nav-link" href="{% url 'instituicoes-publicas' %}"><i class="bi bi-building me-1"></i>Instituições</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url "index" %}#depoimentos"><i class="bi bi-chat-left-text-fill me-1"></i>Depoimentos</a>
+                        <a class="nav-link" href="{% url 'historias-publicas' %}"><i class="bi bi-chat-left-text-fill me-1"></i>Histórias</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url "sobre" %}"><i class="bi bi-info-circle me-1"></i>Sobre</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url "admin:index" %}">Admin</a>
-                    </li>
-                    {% comment %} <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="doacoesDropdown" role="button" data-bs-toggle="dropdown">
+                    
+                    {% if user.is_authenticated %}
+                    <!-- Menu de Doações (visível para usuários autenticados) -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="doacoesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-gift me-1"></i>Doações
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-search me-2"></i>Buscar Instituições</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-cash-coin me-2"></i>Fazer Doação</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-clock-history me-2"></i>Minhas Doações</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cadastrar-doacao' %}">
+                                <i class="bi bi-plus-circle me-2"></i>Registrar Doação
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'doacaoList' %}">
+                                <i class="bi bi-list-ul me-2"></i>Minhas Doações
+                            </a></li>
                         </ul>
                     </li>
+                    
+                    <!-- Menu de Histórias (visível para usuários autenticados) -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="instituicoesDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-building me-1"></i>Instituições
+                        <a class="nav-link dropdown-toggle" href="#" id="historiasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-chat-heart me-1"></i>Histórias
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-list-ul me-2"></i>Ver Instituições</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-plus-circle me-2"></i>Cadastrar Instituição</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle me-2"></i>Como Participar</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cadastrar-historia-inspiradora' %}">
+                                <i class="bi bi-pencil-square me-2"></i>Compartilhar História
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'historias-inspiradorasList' %}">
+                                <i class="bi bi-book me-2"></i>Minhas Histórias
+                            </a></li>
                         </ul>
-                    </li> {% endcomment %}
+                    </li>
+                    {% endif %}
+                    
+                    {% if user.is_superuser %}
+                    <!-- Menu Administrativo (visível apenas para superusuários) -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-warning" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-shield-fill-check me-1"></i>Admin
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Gerenciar Registros</li>
+                            <li><a class="dropdown-item" href="{% url 'doadorList' %}">
+                                <i class="bi bi-people me-2"></i>Doadores
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'instituicaoList' %}">
+                                <i class="bi bi-building me-2"></i>Instituições
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'doacaoList' %}">
+                                <i class="bi bi-gift me-2"></i>Doações
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'historias-inspiradorasList' %}">
+                                <i class="bi bi-book me-2"></i>Histórias
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'statusList' %}">
+                                <i class="bi bi-tags me-2"></i>Status
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'admin:index' %}">
+                                <i class="bi bi-gear-fill me-2"></i>Painel Django Admin
+                            </a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
                 </ul>
                 
                 <!-- User Menu / Login Buttons -->
@@ -252,171 +215,138 @@
         <div class="container py-5">
             <div class="d-flex justify-content-center align-items-center mb-5">
                 <h2 class="display-5 fw-bold">Últimas Instituições Cadastradas</h2>
-                
             </div>
 
+            {% if ultimas_instituicoes %}
             <div class="row g-4">
-                <!-- Card 1 -->
+                {% for instituicao in ultimas_instituicoes %}
                 <div class="col-md-6 col-lg-4">
                     <div class="card institution-card border-0 shadow h-100">
-                        <div class="text-center py-2"><i class="bi bi-image text-primary" style="font-size: 4rem;"></i></div>
+                        <div class="text-center py-4 gradient-bg">
+                            <i class="bi bi-building-fill text-white" style="font-size: 4rem;"></i>
+                        </div>
                         <div class="card-body">
-                            <span class="badge bg-success mb-2">Educação</span>
-                            <h5 class="card-title fw-bold">Instituto Aprender</h5>
-                            <p class="card-text text-muted line-clamp-2">Promovendo educação de qualidade para crianças em situação de vulnerabilidade social</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="badge bg-primary mb-2">{{ instituicao.tipo }}</span>
+                            <h5 class="card-title fw-bold">{{ instituicao.nome }}</h5>
+                            <p class="card-text text-muted line-clamp-2">{{ instituicao.descricao }}</p>
+                            <div class="mb-2">
                                 <small class="text-muted">
-                                    <i class="bi bi-geo-alt-fill me-1"></i>São Paulo, SP
+                                    <i class="bi bi-geo-alt-fill me-1"></i>{{ instituicao.cidade }}
                                 </small>
-                                <a href="#" class="btn btn-sm btn-outline-success">Doar Agora</a>
                             </div>
+                            <div class="mb-2">
+                                <small class="text-muted">
+                                    <i class="bi bi-telephone-fill me-1"></i>{{ instituicao.telefone }}
+                                </small>
+                            </div>
+                            
+                            {% if user.is_superuser %}
+                            <div class="d-flex gap-2 mt-3">
+                                <a href="{% url 'editar-instituicao' instituicao.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                                    <i class="bi bi-pencil me-1"></i>Editar
+                                </a>
+                                <a href="{% url 'deletar-instituicao' instituicao.pk %}" class="btn btn-sm btn-outline-danger flex-grow-1">
+                                    <i class="bi bi-trash me-1"></i>Excluir
+                                </a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card institution-card border-0 shadow h-100">
-                        <div class="text-center py-2"><i class="bi bi-image text-primary" style="font-size: 4rem;"></i></div>
-                        <div class="card-body">
-                            <span class="badge bg-danger mb-2">Saúde</span>
-                            <h5 class="card-title fw-bold">Casa da Esperança</h5>
-                            <p class="card-text text-muted line-clamp-2">Apoio a famílias de crianças em tratamento de câncer com hospedagem e suporte</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <small class="text-muted">
-                                    <i class="bi bi-geo-alt-fill me-1"></i>Rio de Janeiro, RJ
-                                </small>
-                                <a href="#" class="btn btn-sm btn-outline-success">Doar Agora</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card institution-card border-0 shadow h-100">
-                        <div class="text-center py-2"><i class="bi bi-image text-primary" style="font-size: 4rem;"></i></div>
-                        <div class="card-body">
-                            <span class="badge bg-warning mb-2">Animais</span>
-                            <h5 class="card-title fw-bold">Patinhas Felizes</h5>
-                            <p class="card-text text-muted line-clamp-2">Resgate e cuidado de animais abandonados buscando lares responsáveis</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <small class="text-muted">
-                                    <i class="bi bi-geo-alt-fill me-1"></i>Curitiba, PR
-                                </small>
-                                <a href="#" class="btn btn-sm btn-outline-success">Doar Agora</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
+            {% else %}
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+                <p class="mb-0">Ainda não há instituições cadastradas.</p>
+            </div>
+            {% endif %}
 
             <div class="text-center mt-5">
-                <a href="#" class="btn btn-outline-success btn-lg mt-5 px-4">
+                <a href="{% url 'instituicoes-publicas' %}" class="btn btn-success btn-lg px-4">
                     <i class="bi bi-building me-2"></i>Ver Todas as Instituições
                 </a>
-
             </div>
         </div>
     </section>
 
-    <!-- Depoimentos -->
+    <!-- Histórias Inspiradoras -->
     <section id="depoimentos" class="py-5 bg-light">
         <div class="container py-5">
             <h2 class="display-5 fw-bold text-center mb-5">Histórias de Transformação</h2>
             
+            {% if ultimas_historias %}
             <div class="row g-4">
-                <!-- Depoimento 1 -->
+                {% for historia in ultimas_historias %}
                 <div class="col-md-6 col-lg-4">
                     <div class="card story-card border-0 shadow h-100">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="{% static 'images/avatar1.jpg' %}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="Avatar">
+                                <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                                    <i class="bi bi-chat-quote-fill fs-4 text-success"></i>
+                                </div>
                                 <div>
-                                    <h6 class="mb-0 fw-bold">Maria Silva</h6>
-                                    <small class="text-muted">Beneficiária</small>
+                                    <h6 class="mb-0 fw-bold">{{ historia.autor }}</h6>
+                                    <small class="text-muted">{{ historia.data_postagem|date:"d/m/Y" }}</small>
                                 </div>
                             </div>
-                            <p class="text-muted">"Graças à solidariedade de pessoas que nunca conheci, consegui terminar meus estudos e hoje posso retribuir ajudando outros jovens."</p>
+                            <h5 class="fw-bold text-success mb-2">{{ historia.titulo }}</h5>
+                            <p class="text-muted" style="max-height: 80px; overflow: hidden;">{{ historia.conteudo|truncatewords:20 }}</p>
+                            
+                            {% if historia.doador or historia.instituicao %}
+                            <hr>
+                            <small class="text-muted d-block">
+                                {% if historia.doador %}
+                                <i class="bi bi-heart me-1"></i>{{ historia.doador.nome }}
+                                {% endif %}
+                                {% if historia.instituicao %}
+                                <i class="bi bi-building me-1"></i>{{ historia.instituicao.nome }}
+                                {% endif %}
+                            </small>
+                            {% endif %}
+                            
+                            {% if user.is_superuser %}
+                            <div class="d-flex gap-2 mt-3">
+                                <a href="{% url 'editar-historia-inspiradora' historia.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                                    <i class="bi bi-pencil me-1"></i>Editar
+                                </a>
+                                <a href="{% url 'deletar-historia-inspiradora' historia.pk %}" class="btn btn-sm btn-outline-danger flex-grow-1">
+                                    <i class="bi bi-trash me-1"></i>Excluir
+                                </a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
-                <!-- Depoimento 2 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card story-card border-0 shadow h-100">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="{% static 'images/avatar2.jpg' %}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="Avatar">
-                                <div>
-                                    <h6 class="mb-0 fw-bold">Ana Santos</h6>
-                                    <small class="text-muted">Organizadora</small>
-                                </div>
-                            </div>
-                            <p class="text-muted">"Mobilizamos toda a comunidade para arrecadar mais de 2 toneladas de alimentos. A união faz a força e transforma realidades."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Depoimento 3 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card story-card border-0 shadow h-100">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="{% static 'images/avatar3.jpg' %}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="Avatar">
-                                <div>
-                                    <h6 class="mb-0 fw-bold">Carlos Mendes</h6>
-                                    <small class="text-muted">Doador Regular</small>
-                                </div>
-                            </div>
-                            <p class="text-muted">"Doar se tornou um hábito. É gratificante saber que minha contribuição mensal ajuda a manter projetos importantes para a comunidade."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Depoimento 4 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card story-card border-0 shadow h-100">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="{% static 'images/avatar4.jpg' %}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="Avatar">
-                                <div>
-                                    <h6 class="mb-0 fw-bold">Juliana Costa</h6>
-                                    <small class="text-muted">Voluntária</small>
-                                </div>
-                            </div>
-                            <p class="text-muted">"Ver o sorriso no rosto das crianças que ajudamos é a maior recompensa. Cada doação faz uma diferença real em suas vidas."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Depoimento 5 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card story-card border-0 shadow h-100">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="{% static 'images/avatar5.jpg' %}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="Avatar">
-                                <div>
-                                    <h6 class="mb-0 fw-bold">Paula Oliveira</h6>
-                                    <small class="text-muted">Resgatadora de Animais</small>
-                                </div>
-                            </div>
-                            <p class="text-muted">"Com o apoio da Solly, conseguimos mais ração e medicamentos para os animais resgatados. Eles merecem uma segunda chance!"</p>
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
+                
                 <!-- CTA Card -->
+                {% if user.is_authenticated %}
                 <div class="col-md-6 col-lg-4">
                     <div class="card border-0 shadow h-100 gradient-bg text-white">
                         <div class="card-body p-4 d-flex flex-column justify-content-center text-center">
                             <i class="bi bi-chat-quote-fill fs-1 mb-3"></i>
                             <h5 class="fw-bold mb-3">Compartilhe Sua História</h5>
                             <p class="mb-4">Inspire outras pessoas com sua experiência de solidariedade</p>
-                            <a href="#" class="btn btn-light">Enviar Depoimento</a>
+                            <a href="{% url 'cadastrar-historia-inspiradora' %}" class="btn btn-light">
+                                <i class="bi bi-plus-circle me-2"></i>Compartilhar História
+                            </a>
                         </div>
                     </div>
                 </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+                <p class="mb-0">Ainda não há histórias compartilhadas. Seja o primeiro a inspirar!</p>
+            </div>
+            {% endif %}
+            
+            <div class="text-center mt-5">
+                <a href="{% url 'historias-publicas' %}" class="btn btn-success btn-lg px-4">
+                    <i class="bi bi-chat-heart me-2"></i>Ver Todas as Histórias
+                </a>
             </div>
         </div>
     </section>
@@ -487,10 +417,10 @@
                 <div class="col-lg-2 col-md-6">
                     <h6 class="fw-bold mb-3">Links Rápidos</h6>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#inicio" class="text-white-50 text-decoration-none">Início</a></li>
-                        <li class="mb-2"><a href="#como-funciona" class="text-white-50 text-decoration-none">Como Funciona</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Instituições</a></li>
-                        <li class="mb-2"><a href="#depoimentos" class="text-white-50 text-decoration-none">Depoimentos</a></li>
+                        <li class="mb-2"><a href="{% url 'index' %}" class="text-white-50 text-decoration-none">Início</a></li>
+                        <li class="mb-2"><a href="{% url 'index' %}#como-funciona" class="text-white-50 text-decoration-none">Como Funciona</a></li>
+                        <li class="mb-2"><a href="{% url 'instituicoes-publicas' %}" class="text-white-50 text-decoration-none">Instituições</a></li>
+                        <li class="mb-2"><a href="{% url 'historias-publicas' %}" class="text-white-50 text-decoration-none">Histórias</a></li>
                     </ul>
                 </div>
                 

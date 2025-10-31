@@ -3,29 +3,78 @@
 {% load static %}
 
 {% block conteudo %}
+<!-- Lista de Status -->
+<section id="conteudo" class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="display-5 fw-bold">
+                <i class="bi bi-tags me-2"></i>Status de Doações
+            </h2>
+            <a href="{% url 'cadastrar-status' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Novo Status
+            </a>
+        </div>
 
-<h3>Lista de </h3>
-
-<table>
-<tr>
-    <th>Nome</th>
-    <th>Telefone</th>
-    <th>cidade</th>
-    <th>Administrar</th>
-</tr>
-
-{% for doador in object_list %}
-<tr>
-    <td>{{doador.nome}}</td>
-    <td>{{doador.telefone}}</td>
-    <td>{{doador.cidade}}</td>
-    <td>
-        <a href="{% url "editar-doador" doador.pk %}">Editar</a> 
-        <a href="{% url "deletar-doador" doador.pk %}">Deletar</a>
-    </td>
-</tr>
-{% endfor %}
-
-</table>
-
+        {% if status_list %}
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-success">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col"><i class="bi bi-tag me-1"></i>Nome do Status</th>
+                                <th scope="col"><i class="bi bi-lock me-1"></i>Pode Editar?</th>
+                                <th scope="col" class="text-center"><i class="bi bi-gear me-1"></i>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for status in status_list %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td class="fw-semibold">{{ status.nome }}</td>
+                                <td>
+                                    {% if status.pode_editar %}
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-unlock me-1"></i>Sim
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-lock me-1"></i>Não
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{% url 'editar-status' status.pk %}" 
+                                           class="btn btn-outline-primary" 
+                                           title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="{% url 'deletar-status' status.pk %}" 
+                                           class="btn btn-outline-danger" 
+                                           title="Excluir">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+            <h5>Nenhum status cadastrado</h5>
+            <p class="mb-3">Você ainda não possui status cadastrados para as doações.</p>
+            <a href="{% url 'cadastrar-status' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Cadastrar Primeiro Status
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

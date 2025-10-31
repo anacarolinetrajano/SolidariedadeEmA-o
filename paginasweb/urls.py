@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    PaginaInicial, Sobre,
+    PaginaInicial, Sobre, InstituicoesPublicasList, HistoriasPublicasList,
     DoadorCreate, DoadorUpdate, DoadorDelete,
     InstituicaoCreate, InstituicaoUpdate, InstituicaoDelete,
     DoacaoCreate, DoacaoUpdate, DoacaoDelete,
@@ -34,9 +34,11 @@ urlpatterns = [
 
     path("", PaginaInicial.as_view(), name="index"),
     path("sobre/", Sobre.as_view(), name="sobre"),
+    path("instituicoes/", InstituicoesPublicasList.as_view(), name="instituicoes-publicas"),
+    path("historias/", HistoriasPublicasList.as_view(), name="historias-publicas"),
     
-    path("cadastrar/doador/", DoadorCreate.as_view(), name="cadastrar-doador"),
-    path("cadastrar/instituicao/", InstituicaoCreate.as_view(), name="cadastrar-instituicao"),
+    # path("cadastrar/doador/", DoadorCreate.as_view(), name="cadastrar-doador"),
+    # path("cadastrar/instituicao/", InstituicaoCreate.as_view(), name="cadastrar-instituicao"),
     path("cadastrar/doacao/", DoacaoCreate.as_view(), name="cadastrar-doacao"),
     path("cadastrar/status/", StatusCreate.as_view(), name="cadastrar-status"),
     path("cadastrar/historia-inspiradora/", Historia_InspiradorasCreate.as_view(), name="cadastrar-historia-inspiradora"),

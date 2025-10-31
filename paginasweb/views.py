@@ -61,9 +61,39 @@ class CadastroInstituicaoView(CreateView):
 # Views para Páginas Estáticas
 class PaginaInicial(TemplateView):
     template_name = 'paginasweb/index.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Buscar últimas 3 instituições cadastradas
+        context['ultimas_instituicoes'] = Instituicao.objects.all().order_by('-id')[:3]
+        # Buscar últimas 5 histórias cadastradas
+        context['ultimas_historias'] = Historia_Inspiradoras.objects.all().order_by('-data_postagem')[:5]
+        return context
 
 class Sobre(TemplateView):
     template_name = 'paginasweb/sobre.html'
+
+# View pública para listar todas as instituições
+class InstituicoesPublicasList(ListView):
+    template_name = 'paginasweb/instituicoes_publicas.html'
+    model = Instituicao
+    context_object_name = 'instituicoes'
+    paginate_by = 9  # 9 cards por página (3x3)
+    
+    def get_queryset(self):
+        # Lista todas as instituições para visualização pública
+        return Instituicao.objects.all().order_by('-id')
+
+
+class HistoriasPublicasList(ListView):
+    template_name = 'paginasweb/historias_publicas.html'
+    model = Historia_Inspiradoras
+    context_object_name = 'historias'
+    paginate_by = 9  # 9 cards por página (3x3)
+    
+    def get_queryset(self):
+        # Lista todas as histórias para visualização pública
+        return Historia_Inspiradoras.objects.all().order_by('-data_postagem')
 
 # Views para Criação (Create) - Modified to save current user
 class DoadorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -113,6 +143,13 @@ class DoacaoCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.usuario = self.request.user # Assign the current user
         return super().form_valid(form)
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtrar apenas doadores e instituições do usuário atual (exceto superuser)
+        if not self.request.user.is_superuser:
+            form.fields['doador'].queryset = Doador.objects.filter(usuario=self.request.user)
+        return form
 
 class Historia_InspiradorasCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Historia_Inspiradoras
@@ -125,6 +162,15 @@ class Historia_InspiradorasCreate(SuccessMessageMixin, LoginRequiredMixin, Creat
     def form_valid(self, form):
         form.instance.usuario = self.request.user # Assign the current user
         return super().form_valid(form)
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtrar doadores e instituições do usuário (campos opcionais)
+        if not self.request.user.is_superuser:
+            form.fields['doador'].queryset = Doador.objects.filter(usuario=self.request.user)
+        # Tornar autor opcional ou preencher automaticamente com username
+        form.fields['autor'].initial = self.request.user.username
+        return form
 
 # Views para Atualização (Update) - Modified to filter by current user
 class DoadorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -136,8 +182,10 @@ class DoadorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     success_message = "Doador atualizado com sucesso!"
 
     def get_object(self):
-        # Only allow editing of records owned by the current user
-        return Doador.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
+        # Permite edição apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Doador.objects.get(pk=self.kwargs["pk"])
+        return Doador.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
 
 class InstituicaoUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'paginasweb/form.html'
@@ -148,8 +196,10 @@ class InstituicaoUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     success_message = "Instituição atualizada com sucesso!"
 
     def get_object(self):
-        # Only allow editing of records owned by the current user
-        return Instituicao.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
+        # Permite edição apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Instituicao.objects.get(pk=self.kwargs["pk"])
+        return Instituicao.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
 
 class StatusUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'paginasweb/form.html'
@@ -170,6 +220,19 @@ class DoacaoUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     extra_context = {'titulo' : "Editar Doação", "botao" : "Salvar Alterações"}
     success_message = "Doação atualizada com sucesso!"
 
+    def get_object(self):
+        # Permite edição apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Doacao.objects.get(pk=self.kwargs["pk"])
+        return Doacao.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtrar doadores e instituições do usuário
+        if not self.request.user.is_superuser:
+            form.fields['doador'].queryset = Doador.objects.filter(usuario=self.request.user)
+        return form
+
 class Historia_InspiradorasUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Historia_Inspiradoras
     template_name = 'paginasweb/form.html'
@@ -177,6 +240,19 @@ class Historia_InspiradorasUpdate(SuccessMessageMixin, LoginRequiredMixin, Updat
     success_url = reverse_lazy('historias-inspiradorasList')
     extra_context = {'titulo' : "Editar História Inspiradora", "botao" : "Salvar Alterações"}
     success_message = "História Inspiradora atualizada com sucesso!"
+
+    def get_object(self):
+        # Permite edição apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Historia_Inspiradoras.objects.get(pk=self.kwargs["pk"])
+        return Historia_Inspiradoras.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtrar doadores e instituições do usuário (campos opcionais)
+        if not self.request.user.is_superuser:
+            form.fields['doador'].queryset = Doador.objects.filter(usuario=self.request.user)
+        return form
 
 # Views para Exclusão (Delete) - Modified to filter by current user
 class DoadorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
@@ -187,8 +263,10 @@ class DoadorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     success_message = "Doador excluído com sucesso!"
     
     def get_object(self):
-        # Only allow editing of records owned by the current user
-        return Doador.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
+        # Permite exclusão apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Doador.objects.get(pk=self.kwargs["pk"])
+        return Doador.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
     
 class InstituicaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     template_name = 'paginasweb/form.html'
@@ -198,8 +276,11 @@ class InstituicaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     success_message = "Instituição excluída com sucesso!"
     
     def get_object(self):
-        # Only allow editing of records owned by the current user
-        return Instituicao.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
+        # Permite exclusão apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Instituicao.objects.get(pk=self.kwargs["pk"])
+        return Instituicao.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
+
 
 class StatusDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     template_name = 'paginasweb/form.html'
@@ -207,10 +288,6 @@ class StatusDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('statusList')
     extra_context = {'titulo' : "Excluir Status", "botao" : "Confirmar Exclusão"}
     success_message = "Status excluído com sucesso!"
-
-    def get_object(self):
-        # Only allow editing of records owned by the current user
-        return Status.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
     
 
 class DoacaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
@@ -221,8 +298,10 @@ class DoacaoDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     success_message = "Doação excluída com sucesso!"
     
     def get_object(self):
-        # Only allow editing of records owned by the current user
-        return Doacao.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
+        # Permite exclusão apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Doacao.objects.get(pk=self.kwargs["pk"])
+        return Doacao.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
 
 class Historia_InspiradorasDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Historia_Inspiradoras
@@ -232,50 +311,61 @@ class Historia_InspiradorasDelete(SuccessMessageMixin, LoginRequiredMixin, Delet
     success_message = "História Inspiradora excluída com sucesso!"
     
     def get_object(self):
-        # Only allow editing of records owned by the current user
-        return Historia_Inspiradoras.objects.get(usuario=self.request.user,pk=self.kwargs["pk"])
+        # Permite exclusão apenas de registros do usuário atual (ou todos se for superuser)
+        if self.request.user.is_superuser:
+            return Historia_Inspiradoras.objects.get(pk=self.kwargs["pk"])
+        return Historia_Inspiradoras.objects.get(usuario=self.request.user, pk=self.kwargs["pk"])
 
 # Views para Listagem (List) - Modified to filter by current user
 class DoadorList(LoginRequiredMixin, ListView):
-        template_name = 'paginasweb/doadorList.html'
+        template_name = 'paginasweb/lista/doadorList.html'
         model = Doador
         context_object_name = 'doadores'
         
         def get_queryset(self):
-            # Lista apenas registros do usuário atual
+            # Lista apenas registros do usuário atual ou todos se for superuser
+            if self.request.user.is_superuser:
+                return Doador.objects.all()
             return Doador.objects.filter(usuario=self.request.user)
 
 class InstituicaoList(LoginRequiredMixin, ListView):
-    template_name = 'paginasweb/instituicaoList.html' # Corrected template path
+    template_name = 'paginasweb/lista/instituicaoList.html'
     model = Instituicao
     context_object_name = 'instituicoes'
 
     def get_queryset(self):
-        # Only list records owned by the current user
+        # Lista apenas registros do usuário atual ou todos se for superuser
+        if self.request.user.is_superuser:
+            return Instituicao.objects.all()
         return Instituicao.objects.filter(usuario=self.request.user)
 
 class DoacaoList(LoginRequiredMixin, ListView):
-    template_name = 'paginasweb/doacaoList.html' # Corrected template path
+    template_name = 'paginasweb/lista/doacaoList.html'
     model = Doacao
     context_object_name = 'doacoes'
 
     def get_queryset(self):
-        # Only list records owned by the current user
+        # Lista apenas registros do usuário atual ou todos se for superuser
+        if self.request.user.is_superuser:
+            return Doacao.objects.all()
         return Doacao.objects.filter(usuario=self.request.user)
 
 class Historia_InspiradorasList(LoginRequiredMixin, ListView):
-    template_name = 'paginasweb/historias_inspiradorasList.html' # Corrected template path
+    template_name = 'paginasweb/lista/historias_inspiradorasList.html'
     model = Historia_Inspiradoras
     context_object_name = 'historias'
 
     def get_queryset(self):
-        # Only list records owned by the current user
+        # Lista apenas registros do usuário atual ou todos se for superuser
+        if self.request.user.is_superuser:
+            return Historia_Inspiradoras.objects.all()
         return Historia_Inspiradoras.objects.filter(usuario=self.request.user)
 
 class StatusList(LoginRequiredMixin, ListView):
-    template_name = 'paginasweb/statusList.html' # Corrected template path
+    template_name = 'paginasweb/lista/statusList.html'
     model = Status
     context_object_name = 'status_list'
-    # If Status also has a 'usuario' field, add get_queryset here too:
-    # def get_queryset(self):
-    #     return self.model.objects.filter(usuario=self.request.user)
+    
+    def get_queryset(self):
+        # Status é global, então mostra todos
+        return Status.objects.all()

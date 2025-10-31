@@ -3,31 +3,70 @@
 {% load static %}
 
 {% block conteudo %}
+<!-- Lista de Instituições -->
+<section id="conteudo" class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="display-5 fw-bold">
+                <i class="bi bi-building me-2"></i>Minhas Instituições
+            </h2>
+        </div>
 
-<h2>Lista de Instituições</h2>
-
-<table>
-<tr>
-    <th>Nome</th>
-    <th>Telefone</th>
-    <th>Cidade</th>
-    <th>Tipo</th>
-    <th>Administrar</th>
-</tr>
-
-{% for doador in object_list %}
-<tr>
-    <td>{{doador.nome}}</td>
-    <td>{{doador.telefone}}</td>
-    <td>{{doador.cidade}}</td>
-    <td>{{doador.tipo}}</td>
-    <td>
-        <a href="{% url "editar-doador" doador.pk %}">Editar</a> 
-        <a href="{% url "deletar-doador" doador.pk %}">Deletar</a>
-    </td>
-</tr>
-{% endfor %}
-
-</table>
-
+        {% if instituicoes %}
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-success">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col"><i class="bi bi-building me-1"></i>Nome</th>
+                                <th scope="col"><i class="bi bi-telephone me-1"></i>Telefone</th>
+                                <th scope="col"><i class="bi bi-geo-alt me-1"></i>Cidade</th>
+                                <th scope="col"><i class="bi bi-tag me-1"></i>Tipo</th>
+                                <th scope="col"><i class="bi bi-info-circle me-1"></i>Descrição</th>
+                                <th scope="col" class="text-center"><i class="bi bi-gear me-1"></i>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for instituicao in instituicoes %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td class="fw-semibold">{{ instituicao.nome }}</td>
+                                <td>{{ instituicao.telefone }}</td>
+                                <td>{{ instituicao.cidade }}</td>
+                                <td><span class="badge bg-primary">{{ instituicao.tipo }}</span></td>
+                                <td class="text-truncate" style="max-width: 200px;" title="{{ instituicao.descricao }}">
+                                    {{ instituicao.descricao }}
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{% url 'editar-instituicao' instituicao.pk %}" 
+                                           class="btn btn-outline-primary" 
+                                           title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="{% url 'deletar-instituicao' instituicao.pk %}" 
+                                           class="btn btn-outline-danger" 
+                                           title="Excluir">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+            <h5>Nenhuma instituição cadastrada</h5>
+            <p class="mb-3">Você ainda não possui instituições cadastradas.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

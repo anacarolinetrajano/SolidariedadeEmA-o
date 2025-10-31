@@ -3,30 +3,67 @@
 {% load static %}
 
 {% block conteudo %}
+<!-- Lista de Doadores -->
+<section id="conteudo" class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="display-5 fw-bold">
+                <i class="bi bi-people-fill me-2"></i>Meus Doadores
+            </h2>
+        </div>
 
-
-<h2>Lista de Doadores</h2>
-
-<table>
-<tr>
-    <th>Nome</th>
-    <th>Telefone</th>
-    <th>cidade</th>
-    <th>Administrar</th>
-</tr>
-
-{% for doador in object_list %}
-<tr>
-    <td>{{doador.nome}}</td>
-    <td>{{doador.telefone}}</td>
-    <td>{{doador.cidade}}</td>
-    <td>
-        <a href="{% url "editar-doador" doador.pk %}">Editar</a> 
-        <a href="{% url "deletar-doador" doador.pk %}">Deletar</a>
-    </td>
-</tr>
-{% endfor %}
-
-</table>
-
+        {% if doadores %}
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-success">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col"><i class="bi bi-person me-1"></i>Nome</th>
+                                <th scope="col"><i class="bi bi-telephone me-1"></i>Telefone</th>
+                                <th scope="col"><i class="bi bi-geo-alt me-1"></i>Cidade</th>
+                                <th scope="col" class="text-center"><i class="bi bi-gear me-1"></i>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doador in doadores %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td class="fw-semibold">{{ doador.nome }}</td>
+                                <td>{{ doador.telefone }}</td>
+                                <td>{{ doador.cidade }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{% url 'editar-doador' doador.pk %}" 
+                                           class="btn btn-outline-primary" 
+                                           title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="{% url 'deletar-doador' doador.pk %}" 
+                                           class="btn btn-outline-danger" 
+                                           title="Excluir">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+            <h5>Nenhum doador cadastrado</h5>
+            <p class="mb-3">Você ainda não possui doadores cadastrados.</p>
+            <a href="{% url 'cadastrar-doador' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Cadastrar Primeiro Doador
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}
